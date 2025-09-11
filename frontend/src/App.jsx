@@ -7,7 +7,7 @@ import Preloader from "./pages/Preloader";
 import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
 import DashBoard from "./pages/DashBoard";
-
+import ProtectedRoute from "./components/ProtectedRoute"; 
 // Animated wrapper using GSAP
 const AnimatedRoute = ({ children }) => {
   const ref = useRef(null);
@@ -52,7 +52,9 @@ const AnimatedRoutes = () => {
           path="/dashboard"
           element={
             <AnimatedRoute>
-              <DashBoard/>
+              <ProtectedRoute>
+                <DashBoard />
+              </ProtectedRoute>
             </AnimatedRoute>
           }
         />

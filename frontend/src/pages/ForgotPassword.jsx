@@ -8,13 +8,38 @@ const ForgotPassword = () => {
   const [otp, setOtp] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const DEMO_OTP = "112233";
+
+  const handleEmailOtpSubmit = (e) => {
     e.preventDefault();
-    console.log({ email, otp, newPassword, confirmPassword });
-    if (step < 3) {
-      setStep(step + 1); // Just switch steps for demo
+    setError("");
+
+    if (!email) {
+      setError("Email is required!");
+      return;
     }
+
+    if (otp !== DEMO_OTP) {
+      setError("Invalid OTP. Try again.");
+      return;
+    }
+
+    setStep(2); // ✅ move to password reset step
+  };
+
+  const handlePasswordSubmit = (e) => {
+    e.preventDefault();
+    setError("");
+
+    if (newPassword !== confirmPassword) {
+      setError("Passwords do not match!");
+      return;
+    }
+
+    console.log({ email, otp, newPassword, confirmPassword });
+    alert("Password reset successful ✅ (demo)");
   };
 
   return (
@@ -26,16 +51,15 @@ const ForgotPassword = () => {
               Forgot Password
             </h2>
             <p className="text-gray-600 text-sm">
-              {step === 1 && "Enter your registered email"}
-              {step === 2 && "Enter the OTP sent to your email"}
-              {step === 3 && "Set a new password"}
+              {step === 1 && "Enter your email and OTP to continue"}
+              {step === 2 && "Set a new password"}
             </p>
           </div>
 
-          {/* Step 1: Enter Email */}
+          {/* Step 1: Email + OTP */}
           {step === 1 && (
-            <form onSubmit={handleSubmit}>
-              <div className="relative mb-6">
+            <form onSubmit={handleEmailOtpSubmit}>
+              <div className="relative mb-4">
                 <FiMail className="absolute top-1/2 left-4 -translate-y-1/2 text-gray-400" />
                 <input
                   type="email"
@@ -46,29 +70,21 @@ const ForgotPassword = () => {
                   className="w-full pl-12 pr-4 py-3 bg-gray-100 text-gray-900 rounded-full border-2 border-gray-300 outline-none focus:border-blue-500 transition"
                 />
               </div>
-              <button
-                type="submit"
-                className="w-full py-3 bg-blue-500 text-white font-medium rounded-full hover:bg-blue-600 transition"
-              >
-                Next
-              </button>
-            </form>
-          )}
 
-          {/* Step 2: Enter OTP */}
-          {step === 2 && (
-            <form onSubmit={handleSubmit}>
               <div className="relative mb-6">
                 <FiKey className="absolute top-1/2 left-4 -translate-y-1/2 text-gray-400" />
                 <input
                   type="text"
-                  placeholder="Enter OTP"
+                  placeholder="Enter OTP (demo: 112233)"
                   value={otp}
                   onChange={(e) => setOtp(e.target.value)}
                   required
                   className="w-full pl-12 pr-4 py-3 bg-gray-100 text-gray-900 rounded-full border-2 border-gray-300 outline-none focus:border-blue-500 transition"
                 />
               </div>
+
+              {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
+
               <button
                 type="submit"
                 className="w-full py-3 bg-blue-500 text-white font-medium rounded-full hover:bg-blue-600 transition"
@@ -78,9 +94,9 @@ const ForgotPassword = () => {
             </form>
           )}
 
-          {/* Step 3: Reset Password */}
-          {step === 3 && (
-            <form onSubmit={handleSubmit}>
+          {/* Step 2: Reset Password */}
+          {step === 2 && (
+            <form onSubmit={handlePasswordSubmit}>
               <div className="relative mb-4">
                 <FiLock className="absolute top-1/2 left-4 -translate-y-1/2 text-gray-400" />
                 <input
@@ -92,6 +108,7 @@ const ForgotPassword = () => {
                   className="w-full pl-12 pr-4 py-3 bg-gray-100 text-gray-900 rounded-full border-2 border-gray-300 outline-none focus:border-blue-500 transition"
                 />
               </div>
+
               <div className="relative mb-6">
                 <FiLock className="absolute top-1/2 left-4 -translate-y-1/2 text-gray-400" />
                 <input
@@ -103,6 +120,9 @@ const ForgotPassword = () => {
                   className="w-full pl-12 pr-4 py-3 bg-gray-100 text-gray-900 rounded-full border-2 border-gray-300 outline-none focus:border-blue-500 transition"
                 />
               </div>
+
+              {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
+
               <button
                 type="submit"
                 className="w-full py-3 bg-blue-500 text-white font-medium rounded-full hover:bg-blue-600 transition"
