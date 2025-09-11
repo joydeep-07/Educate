@@ -19,6 +19,7 @@ const Navbar = () => {
           <div className="hidden md:flex gap-8 text-md font-medium text-gray-700">
             {["Home", "About","Mission" ].map((item) => (
               <span
+              onClick={()=>navigate("/")}
                 key={item}
                 className="relative cursor-pointer hover:text-blue-600 transition-colors group"
               >

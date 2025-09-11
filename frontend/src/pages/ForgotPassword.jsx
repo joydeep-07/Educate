@@ -22,22 +22,8 @@ const ForgotPassword = () => {
       <div className="w-[780px] max-w-full bg-transparent">
         <div className="bg-transparent flex flex-col">
           <div className="text-center mb-6">
-            <h2 className="text-3xl font-semibold mt-2 mb-2">
-              <span className="text-blue-500">F</span>
-              <span className="text-red-500">o</span>
-              <span className="text-yellow-500">r</span>
-              <span className="text-blue-500">g</span>
-              <span className="text-green-500">o</span>
-              <span className="text-red-500">t</span>
-              <span className="text-blue-500"> </span>
-              <span className="text-yellow-500">P</span>
-              <span className="text-blue-500">a</span>
-              <span className="text-green-500">s</span>
-              <span className="text-red-500">s</span>
-              <span className="text-blue-500">w</span>
-              <span className="text-yellow-500">o</span>
-              <span className="text-green-500">r</span>
-              <span className="text-red-500">d</span>
+            <h2 className="text-3xl text-gray-700 font-semibold mt-2 mb-2">
+              Forgot Password
             </h2>
             <p className="text-gray-600 text-sm">
               {step === 1 && "Enter your registered email"}
