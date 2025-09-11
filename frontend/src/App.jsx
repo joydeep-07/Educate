@@ -5,6 +5,7 @@ import Root from "./layouts/Root";
 import Preloader from "./pages/Preloader";
 import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
+import AnimateNavigation from "./components/AnimateNavigation";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -24,10 +25,12 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Root />}>
-          <Route index element={<Home />} />
-          <Route path="/login" element={<h1>LOGIN</h1>} />
-          <Route path="/register" element={<Signup/>} />
-          <Route path="/forgot/password" element={<ForgotPassword/>} />
+          <Route element={<AnimateNavigation />}>
+            <Route index element={<Home />} />
+            <Route path="/login" element={<h1>LOGIN</h1>} />
+            <Route path="/register" element={<Signup />} />
+            <Route path="/forgot/password" element={<ForgotPassword />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
