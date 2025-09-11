@@ -1,11 +1,15 @@
 // src/components/Login.jsx
 import React, { useState } from "react";
 import { FiUser, FiLock } from "react-icons/fi";
-import { Link, useNavigate } from "react-router-dom"; // useNavigate for redirect
+import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../redux/slices/authSlice";
 
 const Login = ({ switchToRegister }) => {
-  const navigate = useNavigate(); // to redirect after login
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -25,9 +29,7 @@ const Login = ({ switchToRegister }) => {
     try {
       const response = await fetch("http://localhost:3000/api/auth/login/", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
@@ -36,10 +38,9 @@ const Login = ({ switchToRegister }) => {
       if (!response.ok) {
         setError(data.message || "Login failed!");
       } else {
-        // Assuming backend returns a token and user info
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
-        navigate("/dashboard"); // redirect to home or dashboard
+        // Save to Redux + localStorage
+        dispatch(loginSuccess({ user: data.user, token: data.token }));
+        navigate("/dashboard");
       }
     } catch (err) {
       console.error(err);
@@ -105,7 +106,10 @@ const Login = ({ switchToRegister }) => {
       </div>
 
       {/* Google button */}
-      <button className="w-full py-3 bg-white text-gray-700 border border-gray-300 font-medium rounded-full hover:bg-gray-100 transition flex items-center justify-center">
+      <button
+        type="button"
+        className="w-full py-3 bg-white text-gray-700 border border-gray-300 font-medium rounded-full hover:bg-gray-100 transition flex items-center justify-center"
+      >
         <FcGoogle className="text-2xl mr-2" /> Sign in with Google
       </button>
 
@@ -113,6 +117,7 @@ const Login = ({ switchToRegister }) => {
         <span>
           Don’t have an account?{" "}
           <button
+            type="button"
             onClick={switchToRegister}
             className="text-blue-600 font-medium hover:underline ml-2"
           >

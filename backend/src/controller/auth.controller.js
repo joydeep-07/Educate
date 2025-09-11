@@ -75,11 +75,21 @@ exports.login = async (req, res) => {
     res
       .cookie("token", token, { httpOnly: true, secure: false })
       .status(200)
-      .json({ message: "Login successful", student });
+      .json({
+        message: "Login successful",
+        token,                // ✅ add this
+        user: {
+          id: student._id,
+          firstname: student.firstname,
+          lastname: student.lastname,
+          email: student.email,
+        },
+      });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+
 
 // @desc Logout student
 exports.logout = async (req, res) => {
@@ -90,3 +100,45 @@ exports.logout = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+
+
+// @desc Get all students
+exports.getAllStudents = async (req, res) => {
+  try {
+    // Exclude password for security
+    const students = await Student.find().select("-password");
+
+    res.status(200).json({
+      success: true,
+      count: students.length,
+      students,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+
+// @desc Get logged-in student details
+exports.getMe = async (req, res) => {
+  try {
+    const student = await Student.findById(req.user.id).select("-password");
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      user: {
+        id: student._id,
+        firstname: student.firstname,
+        lastname: student.lastname,
+        email: student.email,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
