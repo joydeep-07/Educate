@@ -9,7 +9,7 @@ const Home = () => {
       <div className="flex flex-col mt-20 mb-10 justify-center items-center px-6">
         <div className="wrapper max-w-8xl w-full flex flex-col md:flex-row items-center justify-between py-10">
           {/* Left Text Section */}
-          <div className="text md:w-1/2 pl-10">
+          <div className="text md:w-1/2 pl-20">
             <h1 className="uppercase text-lg font-medium text-amber-500 tracking-widest pl-1">
               Let's do Something
             </h1>
