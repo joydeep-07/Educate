@@ -1,0 +1,145 @@
+import React, { useState } from "react";
+import { FiMail, FiLock, FiKey } from "react-icons/fi";
+import { Link } from "react-router-dom";
+
+const ForgotPassword = () => {
+  const [step, setStep] = useState(1);
+  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log({ email, otp, newPassword, confirmPassword });
+    if (step < 3) {
+      setStep(step + 1); // Just switch steps for demo
+    }
+  };
+
+  return (
+    <div className="grid place-items-center h-[600px] text-gray-900">
+      <div className="w-[780px] max-w-full bg-transparent">
+        <div className="bg-transparent flex flex-col">
+          <div className="text-center mb-6">
+            <h2 className="text-3xl font-semibold mt-2 mb-2">
+              <span className="text-blue-500">F</span>
+              <span className="text-red-500">o</span>
+              <span className="text-yellow-500">r</span>
+              <span className="text-blue-500">g</span>
+              <span className="text-green-500">o</span>
+              <span className="text-red-500">t</span>
+              <span className="text-blue-500"> </span>
+              <span className="text-yellow-500">P</span>
+              <span className="text-blue-500">a</span>
+              <span className="text-green-500">s</span>
+              <span className="text-red-500">s</span>
+              <span className="text-blue-500">w</span>
+              <span className="text-yellow-500">o</span>
+              <span className="text-green-500">r</span>
+              <span className="text-red-500">d</span>
+            </h2>
+            <p className="text-gray-600 text-sm">
+              {step === 1 && "Enter your registered email"}
+              {step === 2 && "Enter the OTP sent to your email"}
+              {step === 3 && "Set a new password"}
+            </p>
+          </div>
+
+          {/* Step 1: Enter Email */}
+          {step === 1 && (
+            <form onSubmit={handleSubmit}>
+              <div className="relative mb-6">
+                <FiMail className="absolute top-1/2 left-4 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="w-full pl-12 pr-4 py-3 bg-gray-100 text-gray-900 rounded-full border-2 border-gray-300 outline-none focus:border-blue-500 transition"
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full py-3 bg-blue-500 text-white font-medium rounded-full hover:bg-blue-600 transition"
+              >
+                Next
+              </button>
+            </form>
+          )}
+
+          {/* Step 2: Enter OTP */}
+          {step === 2 && (
+            <form onSubmit={handleSubmit}>
+              <div className="relative mb-6">
+                <FiKey className="absolute top-1/2 left-4 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Enter OTP"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                  required
+                  className="w-full pl-12 pr-4 py-3 bg-gray-100 text-gray-900 rounded-full border-2 border-gray-300 outline-none focus:border-blue-500 transition"
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full py-3 bg-blue-500 text-white font-medium rounded-full hover:bg-blue-600 transition"
+              >
+                Next
+              </button>
+            </form>
+          )}
+
+          {/* Step 3: Reset Password */}
+          {step === 3 && (
+            <form onSubmit={handleSubmit}>
+              <div className="relative mb-4">
+                <FiLock className="absolute top-1/2 left-4 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="password"
+                  placeholder="New Password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  required
+                  className="w-full pl-12 pr-4 py-3 bg-gray-100 text-gray-900 rounded-full border-2 border-gray-300 outline-none focus:border-blue-500 transition"
+                />
+              </div>
+              <div className="relative mb-6">
+                <FiLock className="absolute top-1/2 left-4 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="password"
+                  placeholder="Confirm New Password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                  className="w-full pl-12 pr-4 py-3 bg-gray-100 text-gray-900 rounded-full border-2 border-gray-300 outline-none focus:border-blue-500 transition"
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full py-3 bg-blue-500 text-white font-medium rounded-full hover:bg-blue-600 transition"
+              >
+                Reset Password
+              </button>
+            </form>
+          )}
+
+          {/* Back to login */}
+          <div className="flex justify-center items-center text-gray-600 text-sm mt-6">
+            <span>Remembered your password?</span>
+            <Link
+              to="/register"
+              className="ml-2 text-blue-600 font-medium hover:underline"
+            >
+              Sign in instead
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ForgotPassword;
