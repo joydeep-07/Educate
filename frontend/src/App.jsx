@@ -6,6 +6,7 @@ import Root from "./layouts/Root";
 import Preloader from "./pages/Preloader";
 import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
+import DashBoard from "./pages/DashBoard";
 
 // Animated wrapper using GSAP
 const AnimatedRoute = ({ children }) => {
@@ -48,10 +49,10 @@ const AnimatedRoutes = () => {
           }
         />
         <Route
-          path="/login"
+          path="/dashboard"
           element={
             <AnimatedRoute>
-              <h1>LOGIN</h1>
+              <DashBoard/>
             </AnimatedRoute>
           }
         />

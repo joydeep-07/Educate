@@ -1,21 +1,52 @@
 // src/components/Login.jsx
 import React, { useState } from "react";
 import { FiUser, FiLock } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // useNavigate for redirect
 import { FcGoogle } from "react-icons/fc";
+
 const Login = ({ switchToRegister }) => {
+  const navigate = useNavigate(); // to redirect after login
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch("http://localhost:3000/api/auth/login/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.message || "Login failed!");
+      } else {
+        // Assuming backend returns a token and user info
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        navigate("/dashboard"); // redirect to home or dashboard
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Something went wrong. Try again later.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -25,6 +56,10 @@ const Login = ({ switchToRegister }) => {
           Login
         </h2>
       </div>
+
+      {error && (
+        <div className="text-red-500 text-sm mb-4 text-center">{error}</div>
+      )}
 
       <form onSubmit={handleSubmit}>
         <div className="relative mb-4">
@@ -55,9 +90,10 @@ const Login = ({ switchToRegister }) => {
 
         <button
           type="submit"
-          className="w-full py-3 bg-blue-500 text-white font-medium rounded-full hover:bg-blue-600 transition"
+          disabled={loading}
+          className="w-full py-3 bg-blue-500 text-white font-medium rounded-full hover:bg-blue-600 transition disabled:opacity-50"
         >
-          Next
+          {loading ? "Logging in..." : "Next"}
         </button>
       </form>
 
