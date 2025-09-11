@@ -38,24 +38,8 @@ const Register = ({ switchToLogin }) => {
   return (
     <div className="bg-transparent flex flex-col">
       <div className="text-center mb-6">
-        <h2 className="text-4xl font-semibold mt-2 mb-5">
-          <span className="text-blue-500">C</span>
-          <span className="text-red-500">r</span>
-          <span className="text-yellow-500">e</span>
-          <span className="text-blue-500">a</span>
-          <span className="text-green-500">t</span>
-          <span className="text-red-500">e</span>
-          <span className="text-blue-500"> </span>
-          <span className="text-yellow-500">a</span>
-          <span className="text-red-500">n</span>
-          <span className="text-blue-500"> </span>
-          <span className="text-green-500">a</span>
-          <span className="text-red-500">c</span>
-          <span className="text-yellow-500">c</span>
-          <span className="text-blue-500">o</span>
-          <span className="text-green-500">u</span>
-          <span className="text-red-500">n</span>
-          <span className="text-blue-500">t</span>
+        <h2 className="text-4xl text-gra-700 tracking-wider font-semibold mt-2 mb-5">
+        Create an Account
         </h2>
       </div>
 

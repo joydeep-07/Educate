@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { FiUser, FiLock } from "react-icons/fi";
 import { Link } from "react-router-dom";
-
+import { FcGoogle } from "react-icons/fc";
 const Login = ({ switchToRegister }) => {
   const [formData, setFormData] = useState({
     email: "",
@@ -21,12 +21,8 @@ const Login = ({ switchToRegister }) => {
   return (
     <div className="bg-transparent flex flex-col">
       <div className="text-center mb-6">
-        <h2 className="text-4xl text-gray-900 font-semibold mt-2 mb-5">
-          <span className="text-blue-500">L</span>
-          <span className="text-red-500">O</span>
-          <span className="text-yellow-500">G</span>
-          <span className="text-blue-500">I</span>
-          <span className="text-green-500">N</span>
+        <h2 className="text-4xl text-gray-700 tracking-wider font-semibold mt-2 mb-5">
+          Login
         </h2>
       </div>
 
@@ -74,12 +70,7 @@ const Login = ({ switchToRegister }) => {
 
       {/* Google button */}
       <button className="w-full py-3 bg-white text-gray-700 border border-gray-300 font-medium rounded-full hover:bg-gray-100 transition flex items-center justify-center">
-        <img
-          src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
-          alt="Google logo"
-          className="h-6 w-auto mr-2"
-        />
-        Sign in with Google
+        <FcGoogle className="text-2xl mr-2" /> Sign in with Google
       </button>
 
       <div className="flex justify-between items-center text-gray-600 text-sm mt-3">
