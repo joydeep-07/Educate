@@ -16,24 +16,54 @@ const Register = ({ switchToLogin }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+ const handleSubmit = async (e) => {
+   e.preventDefault();
 
-    if (formData.password !== formData.confirmPassword) {
-      console.log("❌ Passwords do not match!");
-      return;
-    }
+   if (formData.password !== formData.confirmPassword) {
+     console.log("❌ Passwords do not match!");
+     return;
+   }
 
-    console.log("Form Data:", formData);
+   try {
+     const response = await fetch("http://localhost:3000/api/auth/register", {
+       method: "POST",
+       headers: {
+         "Content-Type": "application/json",
+       },
+       body: JSON.stringify({
+         firstname: formData.firstname,
+         lastname: formData.lastname,
+         email: formData.email,
+         password: formData.password,
+         confirmPassword: formData.confirmPassword,
+       }),
+     });
 
-    setFormData({
-      firstname: "",
-      lastname: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
-  };
+     const data = await response.json();
+
+     if (!response.ok) {
+       console.error("❌ Registration Error:", data.message);
+       return;
+     }
+
+     console.log("✅ Registration Successful:", data);
+
+     // Clear form
+     setFormData({
+       firstname: "",
+       lastname: "",
+       email: "",
+       password: "",
+       confirmPassword: "",
+     });
+
+     // Optionally redirect to login or dashboard
+     // navigate("/login");
+   } catch (error) {
+     console.error("❌ Network Error:", error);
+   }
+ };
+
 
   return (
     <div className="bg-transparent flex flex-col">

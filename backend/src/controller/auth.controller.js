@@ -11,9 +11,9 @@ const generateToken = (student) => {
 // @desc Register student
 exports.register = async (req, res) => {
   try {
-    const { name, email, password, confirmPassword } = req.body;
+    const { firstname, lastname, email, password, confirmPassword } = req.body;
 
-    if (!name || !email || !password || !confirmPassword) {
+    if (!firstname || !lastname || !email || !password || !confirmPassword) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -26,18 +26,30 @@ exports.register = async (req, res) => {
       return res.status(400).json({ message: "Email already exists" });
     }
 
-    const student = await Student.create({ name, email, password });
-
-    const token = generateToken(student);
+    const student = await Student.create({
+      firstname,
+      lastname,
+      email,
+      password,
+    });
+    const token = generateToken(student); // Your existing JWT generator
 
     res
-      .cookie("token", token, { httpOnly: true, secure: false })
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+      })
       .status(201)
       .json({ message: "Account created successfully", student });
   } catch (error) {
+    if (error.code === 11000) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+
 
 // @desc Login student
 exports.login = async (req, res) => {

@@ -3,9 +3,14 @@ const bcrypt = require("bcryptjs");
 
 const studentSchema = new mongoose.Schema(
   {
-    name: {
+    firstname: {
       type: String,
-      required: [true, "Name is required"],
+      required: [true, "First name is required"],
+      trim: true,
+    },
+    lastname: {
+      type: String,
+      required: [true, "Last name is required"],
       trim: true,
     },
     email: {
@@ -34,6 +39,13 @@ studentSchema.pre("save", async function (next) {
 // Compare password method
 studentSchema.methods.comparePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
+};
+
+// Remove password from response
+studentSchema.methods.toJSON = function () {
+  const obj = this.toObject();
+  delete obj.password;
+  return obj;
 };
 
 const Student = mongoose.model("Student", studentSchema);
