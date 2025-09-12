@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../layouts/Navbar";
 import logo from "../assets/images/logo.png";
 import Testimonials from "../components/Testimonials";
+import Three from "../components/Three";
 
 const Home = () => {
   return (
@@ -36,15 +37,10 @@ const Home = () => {
 
           {/* Right Image Section */}
           <div className="image flex justify-center mt-8 md:mt-0">
-            <img
-              src={logo}
-              alt="Educate Logo"
-              className="w-72 md:w-150 drop-shadow-lg"
-            />
+            <Three/>
           </div>
         </div>
-        {/* Testimonials Section */}
-        {/* <Testimonials/> */}
+       
       </div>
     </>
   );
