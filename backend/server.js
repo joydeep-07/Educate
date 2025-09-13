@@ -1,10 +1,18 @@
-// START server.js
-const app = require("./src/app"); 
-const connectDB = require("./src/db/db");
-require("dotenv").config();
-connectDB();
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import app from "./src/app.js";
+
+dotenv.config();
+
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(`✅ Server running at http://localhost:${PORT}`);
-});
+mongoose
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("✅ MongoDB connected");
+    app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+  })
+  .catch((err) => console.error("❌ MongoDB connection error:", err));

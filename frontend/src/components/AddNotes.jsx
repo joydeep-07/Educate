@@ -35,6 +35,7 @@ const AddNotes = () => {
     };
   }, []);
 
+  // handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -43,11 +44,12 @@ const AddNotes = () => {
     }));
   };
 
+  // handle file change
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
     if (!files.length) return;
 
-    const maxFileSize = 10 * 1024 * 1024;
+    const maxFileSize = 10 * 1024 * 1024; // 10 MB
 
     const newFiles = files
       .map((file) => {
@@ -74,6 +76,7 @@ const AddNotes = () => {
     }));
   };
 
+  // remove file
   const handleRemoveFile = (id) => {
     setFormData((prev) => ({
       ...prev,
@@ -86,27 +89,55 @@ const AddNotes = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  // submit form (connects to backend)
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    console.log("Form submitted:", formData);
 
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const data = new FormData();
+      data.append("subjectName", formData.subjectName);
+      data.append("topic", formData.topic);
+      data.append("caption", formData.caption);
+
+      formData.contents.forEach((item) => {
+        data.append("contents", item.file);
+      });
+
+      const res = await fetch("http://localhost:3000/api/notes", {
+        method: "POST",
+        body: data,
+        credentials: "include",
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to create note");
+      }
+
+      const result = await res.json();
+      console.log("✅ Note created:", result);
+
+      // Reset form
       setFormData({
         subjectName: "",
         topic: "",
         contents: [],
         caption: "",
       });
-    }, 1500);
+    } catch (err) {
+      console.error("❌ Error submitting form:", err.message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
+  // helper: format size
   const formatSize = (size) => {
     if (size >= 1024 * 1024) return (size / (1024 * 1024)).toFixed(1) + " MB";
     return (size / 1024).toFixed(1) + " KB";
   };
 
+  // helper: get file icon
   const getFileIcon = (fileExtension) => {
     switch (fileExtension) {
       case "pdf":

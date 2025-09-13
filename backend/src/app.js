@@ -1,16 +1,27 @@
 // CREATE SERVER app.js
-const express = require("express");
-const cookieParser = require("cookie-parser");
-const authRoutes = require("../src/routes/auth.routes"); 
-const cors = require("cors");
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import cors from "cors";
+import cookieParser from "cookie-parser";
 
+import authRoutes from "./routes/auth.routes.js";
+import noteRoutes from "./routes/note.routes.js";
+
+dotenv.config();
 
 const app = express();
 
 // Middlewares
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(
+  cors({
+    origin: "http://localhost:5173", // frontend origin
+    credentials: true,
+  })
+);
+
 // Routes
 app.get("/", (req, res) => {
   res.send("Hello from Express App, Your server is running on port 3000 🚀");
@@ -18,5 +29,6 @@ app.get("/", (req, res) => {
 
 // Auth Routes
 app.use("/api/auth", authRoutes);
+app.use("/api", noteRoutes);
 
-module.exports = app;
+export default app;
