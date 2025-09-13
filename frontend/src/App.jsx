@@ -8,6 +8,11 @@ import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
 import DashBoard from "./pages/DashBoard";
 import ProtectedRoute from "./components/ProtectedRoute"; 
+import Profile from "./pages/Profile";
+import AddNotes from "./components/AddNotes";
+import Messages from "./components/Messages";
+import Likes from './components/Likes'
+import Notification from "./components/Notification";
 // Animated wrapper using GSAP
 const AnimatedRoute = ({ children }) => {
   const ref = useRef(null);
@@ -48,6 +53,8 @@ const AnimatedRoutes = () => {
             </AnimatedRoute>
           }
         />
+
+        {/* ======================= PROTECTED ROUTES ==========================  */}
         <Route
           path="/dashboard"
           element={
@@ -58,6 +65,62 @@ const AnimatedRoutes = () => {
             </AnimatedRoute>
           }
         />
+
+        <Route
+          path="/profile"
+          element={
+            <AnimatedRoute>
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            </AnimatedRoute>
+          }
+        />
+
+        <Route
+          path="/upload"
+          element={
+            <AnimatedRoute>
+              <ProtectedRoute>
+                <AddNotes />
+              </ProtectedRoute>
+            </AnimatedRoute>
+          }
+        />
+
+        <Route
+          path="/messages"
+          element={
+            <AnimatedRoute>
+              <ProtectedRoute>
+                <Messages />
+              </ProtectedRoute>
+            </AnimatedRoute>
+          }
+        />
+
+        <Route
+          path="/Likes"
+          element={
+            <AnimatedRoute>
+              <ProtectedRoute>
+                <Likes />
+              </ProtectedRoute>
+            </AnimatedRoute>
+          }
+        />
+
+        <Route
+          path="/notifications"
+          element={
+            <AnimatedRoute>
+              <ProtectedRoute>
+                <Notification />
+              </ProtectedRoute>
+            </AnimatedRoute>
+          }
+        />
+        {/* ======================= PROTECTED ROUTES ==========================  */}
         <Route
           path="/register"
           element={

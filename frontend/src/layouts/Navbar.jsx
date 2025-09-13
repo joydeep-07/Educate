@@ -120,7 +120,10 @@ const Navbar = () => {
 
                     {/* Dropdown Links */}
                     <div className="flex flex-col py-2">
-                      <button className="flex items-center gap-3 w-full px-5 py-2 text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-300">
+                      <button
+                        className="flex items-center gap-3 w-full px-5 py-2 text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-300"
+                        onClick={() => navigate("/profile")}
+                      >
                         <FaUserCircle className="text-blue-600" /> Profile
                       </button>
 
