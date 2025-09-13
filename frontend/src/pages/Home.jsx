@@ -3,6 +3,8 @@ import Navbar from "../layouts/Navbar";
 import logo from "../assets/images/logo.png";
 import Testimonials from "../components/Testimonials";
 import Three from "../components/Three";
+import About from "../components/About";
+import Mission from "../components/Mission";
 
 const Home = () => {
   return (
@@ -42,6 +44,9 @@ const Home = () => {
         </div>
        
       </div>
+
+      {/* <About/> */}
+      {/* <Mission/> */}
     </>
   );
 };
