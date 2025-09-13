@@ -5,6 +5,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../redux/slices/authSlice";
+
 import {
   CiCirclePlus,
   CiHeart,
@@ -42,11 +43,12 @@ const UserDropdown = ({ user }) => {
   };
 
   const links = [
+    { name: "Home", icon: <CiCirclePlus />, path: "/dashboard" },
     { name: "Upload Notes", icon: <CiCirclePlus />, path: "/upload" },
     { name: "Notifications", icon: <CiHeart />, path: "/notifications" },
     { name: "Messages", icon: <CiPaperplane />, path: "/messages" },
     { name: "Profile", icon: <CiUser />, path: "/profile" },
-    { name: "Settings", icon: <CiSettings />, path: "/settings" },
+    // { name: "Settings", icon: <CiSettings />, path: "/settings" },
   ];
 
   return (
