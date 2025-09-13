@@ -26,9 +26,6 @@ const Root = () => {
         <Navbar />
 
         <main className="flex-grow flex">
-          {/* Sidebar (only when logged in) */}
-          {token && <Sidebar/> }
-
           {/* Page Content */}
           <div className="flex-1 p-6">
             <Outlet />
