@@ -1,6 +1,6 @@
 // src/redux/authSlice.js
 import { createSlice } from "@reduxjs/toolkit";
-
+import { toast } from "sonner"; 
 // helper function
 const safeJSONParse = (item) => {
   try {
@@ -32,6 +32,7 @@ const authSlice = createSlice({
 
       localStorage.removeItem("user");
       localStorage.removeItem("token");
+      toast.success("Logout Successfull")
     },
   },
 });

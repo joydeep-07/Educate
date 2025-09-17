@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../redux/slices/authSlice";
-import { toast } from "sonner"; // ✅ Import Sonner
+import { toast } from "sonner"; 
 
 const Login = ({ switchToRegister }) => {
   const navigate = useNavigate();
@@ -35,17 +35,16 @@ const Login = ({ switchToRegister }) => {
       const data = await response.json();
 
       if (!response.ok) {
-        toast.error(data.message || "Login failed!"); // ❌ Error toast
+        toast.error(data.message || "Login failed!"); 
       } else {
-        // Save to Redux + localStorage
         dispatch(loginSuccess({ user: data.user, token: data.token }));
 
-        toast.success("Login successful 🎉"); // ✅ Success toast
+        toast.success("Login successful "); 
         navigate("/dashboard");
       }
     } catch (err) {
       console.error(err);
-      toast.error("Something went wrong. Try again later."); // ❌ Error toast
+      toast.error("Something went wrong. Try again later."); 
     } finally {
       setLoading(false);
     }
