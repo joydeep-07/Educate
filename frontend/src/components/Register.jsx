@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { FiUser, FiMail, FiLock } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
+import { ENDPOINTS } from "../utils/endpoints";
 
 const Register = ({ switchToLogin }) => {
   const [formData, setFormData] = useState({
@@ -26,7 +27,7 @@ const Register = ({ switchToLogin }) => {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/api/auth/register", {
+      const response = await fetch(ENDPOINTS.REGISTER, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

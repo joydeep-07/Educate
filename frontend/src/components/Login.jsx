@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../redux/slices/authSlice";
+import { ENDPOINTS } from "../utils/endpoints";
 import { toast } from "sonner"; 
 
 const Login = ({ switchToRegister }) => {
@@ -26,7 +27,7 @@ const Login = ({ switchToRegister }) => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:3000/api/auth/login/", {
+      const response = await fetch(ENDPOINTS.LOGIN, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
