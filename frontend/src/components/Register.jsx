@@ -1,7 +1,8 @@
 // src/components/Register.jsx
 import React, { useState } from "react";
 import { FiUser, FiMail, FiLock } from "react-icons/fi";
-import { Link } from "react-router-dom"; // Import Link for navigation
+import { Link } from "react-router-dom";
+import { toast } from "sonner";
 
 const Register = ({ switchToLogin }) => {
   const [formData, setFormData] = useState({
@@ -16,65 +17,53 @@ const Register = ({ switchToLogin }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
- const handleSubmit = async (e) => {
-   e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-   if (formData.password !== formData.confirmPassword) {
-     console.log("❌ Passwords do not match!");
-     return;
-   }
+    if (formData.password !== formData.confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
 
-   try {
-     const response = await fetch("http://localhost:3000/api/auth/register", {
-       method: "POST",
-       headers: {
-         "Content-Type": "application/json",
-       },
-       body: JSON.stringify({
-         firstname: formData.firstname,
-         lastname: formData.lastname,
-         email: formData.email,
-         password: formData.password,
-         confirmPassword: formData.confirmPassword,
-       }),
-     });
+    try {
+      const response = await fetch("http://localhost:3000/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-     const data = await response.json();
+      const data = await response.json();
 
-     if (!response.ok) {
-       console.error("❌ Registration Error:", data.message);
-       return;
-     }
+      if (!response.ok) {
+        toast.error(data.message || "Registration failed");
+        return;
+      }
 
-     console.log("✅ Registration Successful:", data);
+      toast.success("Registration successful");
 
-     // Clear form
-     setFormData({
-       firstname: "",
-       lastname: "",
-       email: "",
-       password: "",
-       confirmPassword: "",
-     });
-
-     // Optionally redirect to login or dashboard
-     // navigate("/login");
-   } catch (error) {
-     console.error("❌ Network Error:", error);
-   }
- };
-
+      setFormData({
+        firstname: "",
+        lastname: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+    } catch (error) {
+      toast.error("Network error. Try again later");
+    }
+  };
 
   return (
     <div className="bg-transparent flex flex-col">
       <div className="text-center mb-6">
         <h2 className="text-4xl text-gra-700 tracking-wider font-semibold mt-2 mb-5">
-        Create an Account
+          Create an Account
         </h2>
       </div>
 
       <form onSubmit={handleSubmit}>
-        {/* Firstname + Lastname */}
         <div className="flex gap-2 mb-4">
           <div className="relative w-1/2">
             <FiUser className="absolute top-1/2 left-4 -translate-y-1/2 text-gray-400" />
@@ -102,7 +91,6 @@ const Register = ({ switchToLogin }) => {
           </div>
         </div>
 
-        {/* Email */}
         <div className="relative mb-4">
           <FiMail className="absolute top-1/2 left-4 -translate-y-1/2 text-gray-400" />
           <input
@@ -116,7 +104,6 @@ const Register = ({ switchToLogin }) => {
           />
         </div>
 
-        {/* Password */}
         <div className="relative mb-4">
           <FiLock className="absolute top-1/2 left-4 -translate-y-1/2 text-gray-400" />
           <input
@@ -130,7 +117,6 @@ const Register = ({ switchToLogin }) => {
           />
         </div>
 
-        {/* Confirm Password */}
         <div className="relative mb-4">
           <FiLock className="absolute top-1/2 left-4 -translate-y-1/2 text-gray-400" />
           <input
@@ -144,7 +130,6 @@ const Register = ({ switchToLogin }) => {
           />
         </div>
 
-        {/* Submit button */}
         <button
           type="submit"
           className="w-full py-3 bg-blue-500 text-white font-medium rounded-full hover:bg-blue-600 transition"
@@ -153,14 +138,12 @@ const Register = ({ switchToLogin }) => {
         </button>
       </form>
 
-      {/* Divider */}
       <div className="flex items-center my-4">
         <hr className="flex-grow border-gray-300" />
         <span className="text-gray-500 px-2 text-sm">OR</span>
         <hr className="flex-grow border-gray-300" />
       </div>
 
-      {/* Footer links */}
       <div className="flex justify-between items-center text-gray-600 text-sm mt-3">
         <span>
           Already have an account?{" "}
