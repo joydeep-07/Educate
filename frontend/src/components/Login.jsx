@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../redux/slices/authSlice";
+import { toast } from "sonner"; // ✅ Import Sonner
 
 const Login = ({ switchToRegister }) => {
   const navigate = useNavigate();
@@ -15,7 +16,6 @@ const Login = ({ switchToRegister }) => {
     password: "",
   });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -24,7 +24,6 @@ const Login = ({ switchToRegister }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
 
     try {
       const response = await fetch("http://localhost:3000/api/auth/login/", {
@@ -36,15 +35,17 @@ const Login = ({ switchToRegister }) => {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.message || "Login failed!");
+        toast.error(data.message || "Login failed!"); // ❌ Error toast
       } else {
         // Save to Redux + localStorage
         dispatch(loginSuccess({ user: data.user, token: data.token }));
+
+        toast.success("Login successful 🎉"); // ✅ Success toast
         navigate("/dashboard");
       }
     } catch (err) {
       console.error(err);
-      setError("Something went wrong. Try again later.");
+      toast.error("Something went wrong. Try again later."); // ❌ Error toast
     } finally {
       setLoading(false);
     }
@@ -57,10 +58,6 @@ const Login = ({ switchToRegister }) => {
           Login
         </h2>
       </div>
-
-      {error && (
-        <div className="text-red-500 text-sm mb-4 text-center">{error}</div>
-      )}
 
       <form onSubmit={handleSubmit}>
         <div className="relative mb-4">

@@ -14,9 +14,8 @@ createRoot(document.getElementById("root")).render(
       <Toaster
         position="top-right"
         richColors
-        closeButton
         expand
-        duration={3000}
+        duration={1500}
       />
     </Provider>
   </StrictMode>
