@@ -6,7 +6,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 
 import authRoutes from "./routes/auth.routes.js";
-import noteRoutes from "./routes/note.routes.js";
+
 
 dotenv.config();
 
@@ -29,6 +29,6 @@ app.get("/", (req, res) => {
 
 // Auth Routes
 app.use("/api/auth", authRoutes);
-app.use("/api", noteRoutes);
+
 
 export default app;
