@@ -34,7 +34,7 @@ const UserDropdown = ({ user }) => {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/register");
+    navigate("/");
   };
 
   const handleNavigation = (path) => {
