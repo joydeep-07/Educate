@@ -14,8 +14,6 @@ router.post("/register", register);
 router.post("/login", login);
 router.post("/logout", logout);
 router.get("/students", getAllStudents);
-
-// New route for logged-in student
 router.get("/me", protect, getMe);
 
 module.exports = router;

@@ -8,7 +8,7 @@ const generateToken = (student) => {
   });
 };
 
-// @desc Register student
+// Register student
 exports.register = async (req, res) => {
   try {
     const { firstname, lastname, email, password, confirmPassword } = req.body;
@@ -32,7 +32,7 @@ exports.register = async (req, res) => {
       email,
       password,
     });
-    const token = generateToken(student); // Your existing JWT generator
+    const token = generateToken(student); 
 
     res
       .cookie("token", token, {
@@ -51,7 +51,7 @@ exports.register = async (req, res) => {
 };
 
 
-// @desc Login student
+// Login student
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -77,7 +77,7 @@ exports.login = async (req, res) => {
       .status(200)
       .json({
         message: "Login successful",
-        token,                // ✅ add this
+        token,               
         user: {
           id: student._id,
           firstname: student.firstname,
@@ -91,7 +91,7 @@ exports.login = async (req, res) => {
 };
 
 
-// @desc Logout student
+// Logout student
 exports.logout = async (req, res) => {
   try {
     res.clearCookie("token");
@@ -102,7 +102,7 @@ exports.logout = async (req, res) => {
 };
 
 
-// @desc Get all students
+// Get all students
 exports.getAllStudents = async (req, res) => {
   try {
     // Exclude password for security
@@ -119,7 +119,7 @@ exports.getAllStudents = async (req, res) => {
 };
 
 
-// @desc Get logged-in student details
+// Get logged-in student details
 exports.getMe = async (req, res) => {
   try {
     const student = await Student.findById(req.user.id).select("-password");
