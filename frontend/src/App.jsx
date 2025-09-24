@@ -13,6 +13,7 @@ import AddNotes from "./components/AddNotes";
 import Messages from "./components/Messages";
 import Likes from './components/Likes'
 import Notification from "./components/Notification";
+import NotFound from "./components/NotFound";
 // Animated wrapper using GSAP
 const AnimatedRoute = ({ children }) => {
   const ref = useRef(null);
@@ -134,6 +135,15 @@ const AnimatedRoutes = () => {
           element={
             <AnimatedRoute>
               <ForgotPassword />
+            </AnimatedRoute>
+          }
+        />
+
+        <Route
+          path="*"
+          element={
+            <AnimatedRoute>
+              <NotFound />
             </AnimatedRoute>
           }
         />
