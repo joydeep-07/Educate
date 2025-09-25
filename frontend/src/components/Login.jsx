@@ -41,7 +41,7 @@ const Login = ({ switchToRegister }) => {
         dispatch(loginSuccess({ user: data.user, token: data.token }));
 
         toast.success("Login successful "); 
-        navigate("/dashboard");
+        navigate("/");
       }
     } catch (err) {
       console.error(err);

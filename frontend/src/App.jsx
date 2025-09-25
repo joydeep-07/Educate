@@ -6,14 +6,12 @@ import Root from "./layouts/Root";
 import Preloader from "./pages/Preloader";
 import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
-import DashBoard from "./pages/DashBoard";
 import ProtectedRoute from "./components/ProtectedRoute"; 
 import Profile from "./pages/Profile";
-import AddNotes from "./components/AddNotes";
-import Messages from "./components/Messages";
-import Likes from './components/Likes'
-import Notification from "./components/Notification";
 import NotFound from "./components/NotFound";
+import AllCourses from "./pages/AllCourses";
+import Quiz from "./pages/Quiz";
+
 // Animated wrapper using GSAP
 const AnimatedRoute = ({ children }) => {
   const ref = useRef(null);
@@ -57,17 +55,6 @@ const AnimatedRoutes = () => {
 
         {/* ======================= PROTECTED ROUTES ==========================  */}
         <Route
-          path="/dashboard"
-          element={
-            <AnimatedRoute>
-              <ProtectedRoute>
-                <DashBoard />
-              </ProtectedRoute>
-            </AnimatedRoute>
-          }
-        />
-
-        <Route
           path="/profile"
           element={
             <AnimatedRoute>
@@ -79,48 +66,14 @@ const AnimatedRoutes = () => {
         />
 
         <Route
-          path="/upload"
+          path="/quiz"
           element={
-            <AnimatedRoute>
-              <ProtectedRoute>
-                <AddNotes />
-              </ProtectedRoute>
-            </AnimatedRoute>
+            <ProtectedRoute>
+              <Quiz />
+            </ProtectedRoute>
           }
         />
 
-        <Route
-          path="/messages"
-          element={
-            <AnimatedRoute>
-              <ProtectedRoute>
-                <Messages />
-              </ProtectedRoute>
-            </AnimatedRoute>
-          }
-        />
-
-        <Route
-          path="/Likes"
-          element={
-            <AnimatedRoute>
-              <ProtectedRoute>
-                <Likes />
-              </ProtectedRoute>
-            </AnimatedRoute>
-          }
-        />
-
-        <Route
-          path="/notifications"
-          element={
-            <AnimatedRoute>
-              <ProtectedRoute>
-                <Notification />
-              </ProtectedRoute>
-            </AnimatedRoute>
-          }
-        />
         {/* ======================= PROTECTED ROUTES ==========================  */}
         <Route
           path="/register"
@@ -135,6 +88,15 @@ const AnimatedRoutes = () => {
           element={
             <AnimatedRoute>
               <ForgotPassword />
+            </AnimatedRoute>
+          }
+        />
+
+        <Route
+          path="/courses"
+          element={
+            <AnimatedRoute>
+              <AllCourses />
             </AnimatedRoute>
           }
         />

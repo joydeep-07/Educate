@@ -11,6 +11,31 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
 
+  // Define logged-in navigation links
+  const loggedInLinks = [
+    { name: "All Courses", path: "/courses" }, 
+    { name: "Quiz", path: "/quiz" }, 
+  ];
+
+  // Define logged-out navigation links
+  const loggedOutLinks = [
+    { name: "Home", path: "/" },
+    { name: "All Courses", path: "/courses" },
+    { name: "About", path: "/about" }, 
+  ];
+
+  // Helper component for a single Nav Link
+  const NavLink = ({ item, onClick }) => (
+    <span
+      onClick={onClick}
+      key={item.name}
+      className="relative cursor-pointer hover:text-blue-600 transition-colors group"
+    >
+      {item.name}
+      <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-gradient-to-r from-blue-500 to-indigo-600 transition-all duration-300 group-hover:w-full"></span>
+    </span>
+  );
+
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-lg border-b border-gray-200 shadow-sm">
       <div className="max-w-8xl mx-auto px-6 md:px-12 flex justify-between items-center h-16">
@@ -51,22 +76,26 @@ const Navbar = () => {
 
         {/* Right Side */}
         <div className="flex items-center gap-6 relative">
-          {/* Desktop Links (only when logged out) */}
+          {/* Desktop Links (Conditional) */}
           <div className="hidden md:flex gap-8 text-md font-medium text-gray-700">
-            {!token &&
-              ["Home", "About", "Mission"].map((item) => (
-                <span
-                  onClick={() => navigate("/")}
-                  key={item}
-                  className="relative cursor-pointer hover:text-blue-600 transition-colors group"
-                >
-                  {item}
-                  <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-gradient-to-r from-blue-500 to-indigo-600 transition-all duration-300 group-hover:w-full"></span>
-                </span>
-              ))}
+            {token // Check if user is logged in
+              ? loggedInLinks.map((item) => (
+                  <NavLink
+                    key={item.name}
+                    item={item}
+                    onClick={() => navigate(item.path)}
+                  />
+                ))
+              : loggedOutLinks.map((item) => (
+                  <NavLink
+                    key={item.name}
+                    item={item}
+                    onClick={() => navigate(item.path)}
+                  />
+                ))}
           </div>
 
-          {/* CTA */}
+          {/* CTA / UserDropdown */}
           <div className="hidden md:block">
             {!token ? (
               <button
