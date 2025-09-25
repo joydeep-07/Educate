@@ -64,7 +64,7 @@ const Navbar = () => {
         {/* Right Side */}
         <div className="flex items-center gap-6 relative">
           {/* Desktop Links */}
-          <div className="hidden md:flex gap-8 text-md font-medium text-gray-700">
+          <div className="hidden md:flex gap-8 text-sm font-medium text-gray-700">
             {linksToShow.map((item) => (
               <NavLink
                 key={item.name}
