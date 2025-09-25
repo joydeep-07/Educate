@@ -130,7 +130,7 @@ const AddCourse = () => {
                   htmlFor="price"
                   className="flex items-center text-gray-700 text-sm font-medium mb-1 gap-2"
                 >
-                  Price (in USD)
+                  Price (Leave blank if free)
                 </label>
                 <input
                   id="price"
@@ -142,7 +142,6 @@ const AddCourse = () => {
                   } focus:outline-none focus:border-blue-500 text-sm rounded-md`}
                   placeholder="Enter course price"
                   {...register("price", {
-                    required: "Price is required",
                     min: { value: 0, message: "Price cannot be negative" },
                   })}
                 />

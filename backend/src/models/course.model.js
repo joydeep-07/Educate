@@ -5,7 +5,7 @@ const courseSchema = new mongoose.Schema(
     courseName: { type: String, required: true, trim: true },
     facultyName: { type: String, required: true, trim: true },
     bio: { type: String, required: true, maxlength: 200, trim: true }, // ~20 words
-    price: { type: Number, required: true },
+    price: { type: Number},
     syllabus: { type: String, required: true, trim: true },
   },
   { timestamps: true }
