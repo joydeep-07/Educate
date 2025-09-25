@@ -3,15 +3,19 @@ import React, { useState } from "react";
 import logo from "../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { FaSearch } from "react-icons/fa";
 import UserDropdown from "../components/UserDropdown";
-import AdminDropdown from "../components/AdminDropdown"; 
+import AdminDropdown from "../components/AdminDropdown";
 
 const Navbar = () => {
   const { user, token } = useSelector((state) => state.auth);
   const { admin } = useSelector((state) => state.admin);
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
+
+  const adminLinks = [
+    { name: "Home", path: "/" },
+    { name: "All Courses", path: "/courses" },
+  ];
 
   const loggedInLinks = [
     { name: "All Courses", path: "/courses" },
@@ -35,6 +39,16 @@ const Navbar = () => {
     </span>
   );
 
+  // Determine which links to show
+  let linksToShow;
+  if (admin) {
+    linksToShow = adminLinks;
+  } else if (token) {
+    linksToShow = loggedInLinks;
+  } else {
+    linksToShow = loggedOutLinks;
+  }
+
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-lg border-b border-gray-200 shadow-sm">
       <div className="max-w-8xl mx-auto px-6 md:px-12 flex justify-between items-center h-16">
@@ -47,57 +61,23 @@ const Navbar = () => {
           <h1 className="text-[25px] font-semibold text-gray-700">Educate</h1>
         </div>
 
-        {/* Search Bar */}
-        <div className="flex-1 mx-6 hidden md:flex">
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              const query = e.target.search.value.trim();
-              console.log(query);
-            }}
-            className="flex items-center w-[600px] relative"
-          >
-            <input
-              id="search"
-              name="search"
-              type="text"
-              placeholder="Search notes, users..."
-              className="w-full px-4 py-[9px] pr-10 rounded-full border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none text-sm"
-            />
-            <button
-              type="submit"
-              className="absolute right-3 text-gray-500 hover:text-blue-600 transition-colors"
-            >
-              <FaSearch size={16} />
-            </button>
-          </form>
-        </div>
-
         {/* Right Side */}
         <div className="flex items-center gap-6 relative">
           {/* Desktop Links */}
           <div className="hidden md:flex gap-8 text-md font-medium text-gray-700">
-            {token
-              ? loggedInLinks.map((item) => (
-                  <NavLink
-                    key={item.name}
-                    item={item}
-                    onClick={() => navigate(item.path)}
-                  />
-                ))
-              : loggedOutLinks.map((item) => (
-                  <NavLink
-                    key={item.name}
-                    item={item}
-                    onClick={() => navigate(item.path)}
-                  />
-                ))}
+            {linksToShow.map((item) => (
+              <NavLink
+                key={item.name}
+                item={item}
+                onClick={() => navigate(item.path)}
+              />
+            ))}
           </div>
 
           {/* CTA / UserDropdown / AdminDropdown */}
           <div className="hidden md:block relative">
             {admin ? (
-              <AdminDropdown /> // 👈 cleanly rendered here
+              <AdminDropdown />
             ) : !token ? (
               <button
                 onClick={() => navigate("/register")}

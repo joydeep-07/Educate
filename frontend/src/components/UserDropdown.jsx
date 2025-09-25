@@ -45,11 +45,11 @@ const UserDropdown = ({ user }) => {
   };
 
   const links = [
-    { name: "Home", icon: <CiCirclePlus />, path: "/dashboard" },
-    { name: "Upload Notes", icon: <CiCirclePlus />, path: "/upload" },
-    { name: "Notifications", icon: <CiHeart />, path: "/notifications" },
-    { name: "Messages", icon: <CiPaperplane />, path: "/messages" },
-    { name: "Profile", icon: <CiUser />, path: "/profile" },
+    { name: "Home", icon: <CiCirclePlus />, path: "/" },
+    // { name: "Upload Notes", icon: <CiCirclePlus />, path: "/upload" },
+    // { name: "Notifications", icon: <CiHeart />, path: "/notifications" },
+    // { name: "Messages", icon: <CiPaperplane />, path: "/messages" },
+    // { name: "Profile", icon: <CiUser />, path: "/profile" },
     // { name: "Settings", icon: <CiSettings />, path: "/settings" },
   ];
 
