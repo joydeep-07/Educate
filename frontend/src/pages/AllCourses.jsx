@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ENDPOINTS } from "../utils/endpoints";
-
+import { toast } from "sonner";
 const AllCourses = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -126,15 +126,14 @@ const AllCourses = () => {
                 <div className="flex gap-3">
                   <button
                     className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-200 transform hover:scale-105"
-                    onClick={() => alert(`Joining ${course.courseName}...`)}
+                    onClick={() => toast.info("Under Construction")}
                   >
                     Join Now
                   </button>
+
                   <button
                     className="flex-1 border border-gray-300 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 transition-all duration-200"
-                    onClick={() =>
-                      alert(`Viewing details of ${course.courseName}...`)
-                    }
+                    onClick={() => toast.info("Under Construction")}
                   >
                     Details
                   </button>
