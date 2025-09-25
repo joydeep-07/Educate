@@ -1,12 +1,10 @@
-// CREATE SERVER app.js
 import express from "express";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import dotenv from "dotenv";
 
-import authRoutes from "./routes/auth.routes.js";
-
+import authRoutes from "./routes/auth.routes.js"; // Keep if auth exists
+import courseRoutes from "./routes/course.routes.js";
 
 dotenv.config();
 
@@ -17,18 +15,17 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:5173", 
+    origin: "http://localhost:5173", // your React dev server
     credentials: true,
   })
 );
 
 // Routes
 app.get("/", (req, res) => {
-  res.send("Hello from Express App, Your server is running on port 3000 🚀");
+  res.send("Hello from Express App 🚀");
 });
 
-// Auth Routes
-app.use("/api/auth", authRoutes);
-
+app.use("/api/auth", authRoutes); // Keep if you have auth
+app.use("/api/courses", courseRoutes);
 
 export default app;

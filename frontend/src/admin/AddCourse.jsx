@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FiBookOpen, FiLoader } from "react-icons/fi";
 import { useForm } from "react-hook-form";
 import AuthImagePattern from "../components/AuthImagePattern";
-
+import { ENDPOINTS } from "../utils/endpoints";
 const AddCourse = () => {
   const {
     register,
@@ -20,19 +20,34 @@ const AddCourse = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     if (data.bio.trim().split(/\s+/).filter(Boolean).length > 20) {
       alert("Bio cannot exceed 20 words");
       return;
     }
 
     setIsLoading(true);
-    setTimeout(() => {
-      console.log("Course Added:", data);
+
+    try {
+     const res = await fetch(ENDPOINTS.ADD_COURSE, {
+       method: "POST",
+       headers: { "Content-Type": "application/json" },
+       body: JSON.stringify(data),
+     });
+      const result = await res.json();
+
+      if (!res.ok) throw new Error(result.message);
+
+      alert(result.message);
       reset();
+    } catch (err) {
+      alert(err.message);
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   };
+
+
 
   return (
     <div className="mt-20 mb-8 flex items-center justify-center p-4">
