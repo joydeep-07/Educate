@@ -20,10 +20,7 @@ const AddCourse = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  // Removed the useEffect hook that initialized AOS.
-
   const onSubmit = (data) => {
-    // Basic word count validation for bio
     if (data.bio.trim().split(/\s+/).filter(Boolean).length > 20) {
       alert("Bio cannot exceed 20 words");
       return;
@@ -39,21 +36,12 @@ const AddCourse = () => {
 
   return (
     <div className="mt-20 mb-8 flex items-center justify-center p-4">
-      <div
-        className="w-full max-w-[1300px] bg-white rounded-lg shadow-lg overflow-hidden lg:grid lg:grid-cols-2 py-10 min-h-[500px]"
-        // Removed data-aos="fade-up" data-aos-delay="50"
-      >
+      <div className="w-full max-w-[1300px] bg-white rounded-lg shadow-lg overflow-hidden lg:grid lg:grid-cols-2 py-10 min-h-[500px]">
         {/* Left Side - Add Course Form */}
-        <div
-          className="flex flex-col justify-center items-center p-4 sm:p-8"
-          // Removed data-aos="fade-up" data-aos-delay="150"
-        >
+        <div className="flex flex-col justify-center items-center p-4 sm:p-8">
           <div className="w-full max-w-md space-y-6">
             {/* Heading */}
-            <div
-              className="text-center mb-6"
-              // Removed data-aos="fade-up" data-aos-delay="250"
-            >
+            <div className="text-center mb-6">
               <div className="flex flex-col items-center gap-1 group">
                 <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors">
                   <FiBookOpen className="w-5 h-5 text-blue-600" />
@@ -70,7 +58,7 @@ const AddCourse = () => {
             {/* Form */}
             <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
               {/* Course Name */}
-              <div /* Removed data-aos="fade-up" data-aos-delay="300" */>
+              <div>
                 <label
                   htmlFor="courseName"
                   className="flex items-center text-gray-700 text-sm font-medium mb-1 gap-2"
@@ -96,7 +84,7 @@ const AddCourse = () => {
               </div>
 
               {/* Faculty Name */}
-              <div /* Removed data-aos="fade-up" data-aos-delay="350" */>
+              <div>
                 <label
                   htmlFor="facultyName"
                   className="flex items-center text-gray-700 text-sm font-medium mb-1 gap-2"
@@ -122,7 +110,7 @@ const AddCourse = () => {
               </div>
 
               {/* Bio */}
-              <div /* Removed data-aos="fade-up" data-aos-delay="400" */>
+              <div>
                 <label
                   htmlFor="bio"
                   className="flex items-center text-gray-700 text-sm font-medium mb-1 gap-2"
@@ -148,7 +136,7 @@ const AddCourse = () => {
               </div>
 
               {/* Syllabus */}
-              <div /* Removed data-aos="fade-up" data-aos-delay="450" */>
+              <div>
                 <label
                   htmlFor="syllabus"
                   className="flex items-center text-gray-700 text-sm font-medium mb-1 gap-2"
@@ -178,7 +166,6 @@ const AddCourse = () => {
                 type="submit"
                 disabled={isLoading}
                 className="w-full flex items-center justify-center px-3 py-1 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                // Removed data-aos="fade-up" data-aos-delay="500"
               >
                 {isLoading ? (
                   <>
@@ -197,7 +184,6 @@ const AddCourse = () => {
         <AuthImagePattern
           title="Welcome!"
           subtitle="Fill in the course details to get started."
-          // Removed data-aos="fade-up" data-aos-delay="150"
         />
       </div>
     </div>
