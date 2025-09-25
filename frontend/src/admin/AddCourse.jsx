@@ -51,7 +51,7 @@ const AddCourse = () => {
 
   return (
     <div className="mt-20 mb-8 flex items-center justify-center p-4">
-      <div className="w-full max-w-[1300px] bg-white rounded-lg shadow-lg overflow-hidden lg:grid lg:grid-cols-2 py-10 min-h-[500px]">
+      <div className="w-full max-w-[1300px] bg-white rounded-lg shadow-lg overflow-hidden lg:grid lg:grid-cols-2 py-5 min-h-[500px]">
         {/* Left Side - Add Course Form */}
         <div className="flex flex-col justify-center items-center p-4 sm:p-8">
           <div className="w-full max-w-md space-y-6">
@@ -225,8 +225,8 @@ const AddCourse = () => {
 
         {/* Right Side - Image/Pattern */}
         <AuthImagePattern
-          title="Welcome!"
-          subtitle="Fill in the course details to get started."
+          title="Namaste Sir ji !"
+          subtitle="Fill in the course details to add a new course"
         />
       </div>
     </div>
