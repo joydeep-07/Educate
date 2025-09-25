@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FiBookOpen, FiLoader } from "react-icons/fi";
 import { useForm } from "react-hook-form";
 import AuthImagePattern from "../components/AuthImagePattern";
 import { ENDPOINTS } from "../utils/endpoints";
+
 const AddCourse = () => {
   const {
     register,
@@ -15,6 +16,7 @@ const AddCourse = () => {
       facultyName: "",
       bio: "",
       syllabus: "",
+      price: "", // <-- new field
     },
   });
 
@@ -29,11 +31,11 @@ const AddCourse = () => {
     setIsLoading(true);
 
     try {
-     const res = await fetch(ENDPOINTS.ADD_COURSE, {
-       method: "POST",
-       headers: { "Content-Type": "application/json" },
-       body: JSON.stringify(data),
-     });
+      const res = await fetch(ENDPOINTS.ADD_COURSE, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
       const result = await res.json();
 
       if (!res.ok) throw new Error(result.message);
@@ -46,8 +48,6 @@ const AddCourse = () => {
       setIsLoading(false);
     }
   };
-
-
 
   return (
     <div className="mt-20 mb-8 flex items-center justify-center p-4">
@@ -120,6 +120,35 @@ const AddCourse = () => {
                 {errors.facultyName && (
                   <p className="mt-1 text-xs text-red-600">
                     {errors.facultyName.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Price */}
+              <div>
+                <label
+                  htmlFor="price"
+                  className="flex items-center text-gray-700 text-sm font-medium mb-1 gap-2"
+                >
+                  Price (in USD)
+                </label>
+                <input
+                  id="price"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  className={`block w-full px-2 py-1 border-b ${
+                    errors.price ? "border-red-500" : "border-gray-300"
+                  } focus:outline-none focus:border-blue-500 text-sm rounded-md`}
+                  placeholder="Enter course price"
+                  {...register("price", {
+                    required: "Price is required",
+                    min: { value: 0, message: "Price cannot be negative" },
+                  })}
+                />
+                {errors.price && (
+                  <p className="mt-1 text-xs text-red-600">
+                    {errors.price.message}
                   </p>
                 )}
               </div>

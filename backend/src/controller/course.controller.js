@@ -3,13 +3,19 @@ import Course from "../models/course.model.js";
 // Add a new course
 export const addCourse = async (req, res) => {
   try {
-    const { courseName, facultyName, bio, syllabus } = req.body;
+    const { courseName, facultyName, bio, syllabus, price } = req.body;
 
     if (bio.trim().split(/\s+/).length > 20) {
       return res.status(400).json({ message: "Bio cannot exceed 20 words" });
     }
 
-    const newCourse = new Course({ courseName, facultyName, bio, syllabus });
+    const newCourse = new Course({
+      courseName,
+      facultyName,
+      bio,
+      syllabus,
+      price,
+    });
     await newCourse.save();
 
     res
@@ -20,6 +26,7 @@ export const addCourse = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
 
 // Get all courses
 export const getCourses = async (req, res) => {
