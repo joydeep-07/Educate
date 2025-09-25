@@ -5,6 +5,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../redux/slices/authSlice";
+import { toast } from "sonner";
 
 import {
   CiCirclePlus,
@@ -34,6 +35,7 @@ const UserDropdown = ({ user }) => {
 
   const handleLogout = () => {
     dispatch(logout());
+    toast.success("Logout Successfull")
     navigate("/");
   };
 

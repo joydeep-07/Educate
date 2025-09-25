@@ -32,7 +32,7 @@ const authSlice = createSlice({
 
       localStorage.removeItem("user");
       localStorage.removeItem("token");
-      toast.success("Logout Successfull")
+      // toast.success("Logout Successfull")
     },
   },
 });

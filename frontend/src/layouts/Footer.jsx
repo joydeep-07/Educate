@@ -20,6 +20,8 @@ const Footer = () => {
             <p className="text-sm text-gray-600">
               MERN Stack Developer crafting modern, scalable web applications.
             </p>
+
+          
           </div>
 
           {/* Skills */}

@@ -11,6 +11,7 @@ import Profile from "./pages/Profile";
 import NotFound from "./components/NotFound";
 import AllCourses from "./pages/AllCourses";
 import Quiz from "./pages/Quiz";
+import AdminLogin from "./admin/AdminLogin";
 
 // Animated wrapper using GSAP
 const AnimatedRoute = ({ children }) => {
@@ -83,11 +84,21 @@ const AnimatedRoutes = () => {
             </AnimatedRoute>
           }
         />
+
         <Route
           path="/forgot/password"
           element={
             <AnimatedRoute>
               <ForgotPassword />
+            </AnimatedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/login"
+          element={
+            <AnimatedRoute>
+              <AdminLogin />
             </AnimatedRoute>
           }
         />
