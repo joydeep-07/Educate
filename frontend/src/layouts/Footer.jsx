@@ -1,5 +1,6 @@
 import React from "react";
 import { FaGithub, FaLinkedin, FaFacebook, FaInstagram } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 
 const Footer = () => {
@@ -20,8 +21,6 @@ const Footer = () => {
             <p className="text-sm text-gray-600">
               MERN Stack Developer crafting modern, scalable web applications.
             </p>
-
-          
           </div>
 
           {/* Skills */}
@@ -76,39 +75,48 @@ const Footer = () => {
 
           {/* Socials */}
           <div>
-            <h4 className="text-blue-600 font-semibold mb-4 tracking-wide">
-              SOCIALS
-            </h4>
-            <div className="flex space-x-4 text-xl text-gray-600">
-              <a
-                href="https://github.com/joydeep-07"
-                target="blank"
-                className="hover:text-blue-600 transition"
-              >
-                <FaGithub />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/joydeep-paul-06b37926a"
-                target="blank"
-                className="hover:text-blue-600 transition"
-              >
-                <FaLinkedin />
-              </a>
-              <a
-                href="https://www.facebook.com/joydeep.paul.568089"
-                target="blank"
-                className="hover:text-blue-600 transition"
-              >
-                <FaFacebook />
-              </a>
-              <a
-                href="https://www.instagram.com/mr.paul_16"
-                target="blank"
-                className="hover:text-blue-600 transition"
-              >
-                <FaInstagram />
-              </a>
+            <div>
+              <h4 className="text-blue-600 font-semibold mb-4 tracking-wide">
+                SOCIALS
+              </h4>
+              <div className="flex space-x-4 text-xl text-gray-600">
+                <a
+                  href="https://github.com/joydeep-07"
+                  target="_blank"
+                  className="hover:text-blue-600 transition-colors duration-300"
+                >
+                  <FaGithub />
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/joydeep-paul-06b37926a"
+                  target="_blank"
+                  className="hover:text-blue-600 transition-colors duration-300"
+                >
+                  <FaLinkedin />
+                </a>
+                <a
+                  href="https://www.facebook.com/joydeep.paul.568089"
+                  target="_blank"
+                  className="hover:text-blue-600 transition-colors duration-300"
+                >
+                  <FaFacebook />
+                </a>
+                <a
+                  href="https://www.instagram.com/mr.paul_16"
+                  target="_blank"
+                  className="hover:text-blue-600 transition-colors duration-300"
+                >
+                  <FaInstagram />
+                </a>
+              </div>
             </div>
+
+            <Link
+              to="/admin/panel"
+              className="inline-block mt-5 px-4 py-1 bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold rounded-full shadow-lg "
+            >
+              Admin Panel
+            </Link>
           </div>
         </div>
 

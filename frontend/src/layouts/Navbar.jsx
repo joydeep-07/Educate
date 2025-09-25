@@ -2,32 +2,28 @@
 import React, { useState } from "react";
 import logo from "../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { FaSearch } from "react-icons/fa";
 import UserDropdown from "../components/UserDropdown";
-import { logoutAdmin } from "../redux/slices/adminSlice"; // 👈 import admin logout
+import AdminDropdown from "../components/AdminDropdown"; 
 
 const Navbar = () => {
   const { user, token } = useSelector((state) => state.auth);
-  const { admin } = useSelector((state) => state.admin); // 👈 get admin state
+  const { admin } = useSelector((state) => state.admin);
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
-  // Define logged-in navigation links
   const loggedInLinks = [
     { name: "All Courses", path: "/courses" },
     { name: "Quiz", path: "/quiz" },
   ];
 
-  // Define logged-out navigation links
   const loggedOutLinks = [
     { name: "Home", path: "/" },
     { name: "All Courses", path: "/courses" },
     { name: "About", path: "/about" },
   ];
 
-  // Helper component for a single Nav Link
   const NavLink = ({ item, onClick }) => (
     <span
       onClick={onClick}
@@ -38,11 +34,6 @@ const Navbar = () => {
       <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-gradient-to-r from-blue-500 to-indigo-600 transition-all duration-300 group-hover:w-full"></span>
     </span>
   );
-
-  const handleAdminLogout = () => {
-    dispatch(logoutAdmin());
-    navigate("/admin/login"); 
-  };
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-lg border-b border-gray-200 shadow-sm">
@@ -86,7 +77,7 @@ const Navbar = () => {
         <div className="flex items-center gap-6 relative">
           {/* Desktop Links */}
           <div className="hidden md:flex gap-8 text-md font-medium text-gray-700">
-            {token // if normal user is logged in
+            {token
               ? loggedInLinks.map((item) => (
                   <NavLink
                     key={item.name}
@@ -103,16 +94,10 @@ const Navbar = () => {
                 ))}
           </div>
 
-          {/* CTA / UserDropdown */}
-          <div className="hidden md:block">
+          {/* CTA / UserDropdown / AdminDropdown */}
+          <div className="hidden md:block relative">
             {admin ? (
-              // 👇 Admin logout button
-              <button
-                onClick={handleAdminLogout}
-                className="bg-red-600 text-white px-4 py-1 rounded-full shadow-md hover:bg-red-700 transition"
-              >
-                Admin Logout
-              </button>
+              <AdminDropdown /> // 👈 cleanly rendered here
             ) : !token ? (
               <button
                 onClick={() => navigate("/register")}

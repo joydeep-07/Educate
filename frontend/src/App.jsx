@@ -12,6 +12,7 @@ import NotFound from "./components/NotFound";
 import AllCourses from "./pages/AllCourses";
 import Quiz from "./pages/Quiz";
 import AdminLogin from "./admin/AdminLogin";
+import AdminPanel from "./admin/AdminPanel";
 
 // Animated wrapper using GSAP
 const AnimatedRoute = ({ children }) => {
@@ -99,6 +100,15 @@ const AnimatedRoutes = () => {
           element={
             <AnimatedRoute>
               <AdminLogin />
+            </AnimatedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/panel"
+          element={
+            <AnimatedRoute>
+              <AdminPanel />
             </AnimatedRoute>
           }
         />
