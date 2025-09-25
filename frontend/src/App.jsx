@@ -13,14 +13,13 @@ import AllCourses from "./pages/AllCourses";
 import Quiz from "./pages/Quiz";
 import AdminLogin from "./admin/AdminLogin";
 import AdminPanel from "./admin/AdminPanel";
-
+import AdminRoute from "./components/AdminRoute";
 // Animated wrapper using GSAP
 const AnimatedRoute = ({ children }) => {
   const ref = useRef(null);
 
   useEffect(() => {
     const el = ref.current;
-    // Animate in
     gsap.fromTo(
       el,
       { opacity: 0, y: 50 },
@@ -55,7 +54,7 @@ const AnimatedRoutes = () => {
           }
         />
 
-        {/* ======================= PROTECTED ROUTES ==========================  */}
+        {/* =======================USER PROTECTED ROUTES ==========================  */}
         <Route
           path="/profile"
           element={
@@ -70,13 +69,26 @@ const AnimatedRoutes = () => {
         <Route
           path="/quiz"
           element={
-            <ProtectedRoute>
-              <Quiz />
-            </ProtectedRoute>
+            <AnimatedRoute>
+              <ProtectedRoute>
+                <Quiz />
+              </ProtectedRoute>
+            </AnimatedRoute>
+          }
+        />
+        {/* ======================= ADMIN PROTECTED ROUTES ==========================  */}
+        <Route
+          path="/admin/panel"
+          element={
+            <AnimatedRoute>
+              <AdminRoute>
+                <AdminPanel />
+              </AdminRoute>
+            </AnimatedRoute>
           }
         />
 
-        {/* ======================= PROTECTED ROUTES ==========================  */}
+        {/* ======================= PROTECTED ROUTES ENDS ==========================  */}
         <Route
           path="/register"
           element={
@@ -100,15 +112,6 @@ const AnimatedRoutes = () => {
           element={
             <AnimatedRoute>
               <AdminLogin />
-            </AnimatedRoute>
-          }
-        />
-
-        <Route
-          path="/admin/panel"
-          element={
-            <AnimatedRoute>
-              <AdminPanel />
             </AnimatedRoute>
           }
         />
