@@ -16,7 +16,9 @@ const AddCourse = () => {
       facultyName: "",
       bio: "",
       syllabus: "",
-      price: "", 
+      price: "",
+      duration: "",
+      category: "",
     },
   });
 
@@ -174,6 +176,63 @@ const AddCourse = () => {
                 {errors.bio && (
                   <p className="mt-1 text-xs text-red-600">
                     {errors.bio.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Duration */}
+              <div>
+                <label
+                  htmlFor="duration"
+                  className="flex items-center text-gray-700 text-sm font-medium mb-1 gap-2"
+                >
+                  Duration
+                </label>
+                <input
+                  id="duration"
+                  type="text"
+                  className={`block w-full px-2 py-1 border-b ${
+                    errors.duration ? "border-red-500" : "border-gray-300"
+                  } focus:outline-none focus:border-blue-500 text-sm rounded-md`}
+                  placeholder="e.g. 6 weeks / 3 months"
+                  {...register("duration", {
+                    required: "Duration is required",
+                  })}
+                />
+                {errors.duration && (
+                  <p className="mt-1 text-xs text-red-600">
+                    {errors.duration.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Category */}
+              <div>
+                <label
+                  htmlFor="category"
+                  className="flex items-center text-gray-700 text-sm font-medium mb-1 gap-2"
+                >
+                  Category
+                </label>
+                <select
+                  id="category"
+                  className={`block w-full px-2 py-1 border-b ${
+                    errors.category ? "border-red-500" : "border-gray-300"
+                  } focus:outline-none focus:border-blue-500 text-sm rounded-md`}
+                  {...register("category", {
+                    required: "Category is required",
+                  })}
+                >
+                  <option value="">Select category</option>
+                  <option value="Web Development">Web Development</option>
+                  <option value="Data Science">Data Science</option>
+                  <option value="Mobile Development">Mobile Development</option>
+                  <option value="Design">Design</option>
+                  <option value="Other">Other</option>
+                </select>
+                {errors.category && (
+                  <p className="mt-1 text-xs text-red-600">
+                    {errors.category.message}
                   </p>
                 )}
               </div>
