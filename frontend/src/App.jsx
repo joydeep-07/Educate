@@ -16,6 +16,8 @@ import AdminPanel from "./admin/AdminPanel";
 import AdminRoute from "./components/AdminRoute";
 import AddCourse from "./admin/AddCourse";
 import SendNewsLetter from "./admin/SendNewsLetter";
+import Payment from "./pages/Payment";
+import Enroll from "./pages/Enroll";
 // Animated wrapper using GSAP
 const AnimatedRoute = ({ children }) => {
   const ref = useRef(null);
@@ -74,6 +76,28 @@ const AnimatedRoutes = () => {
             <AnimatedRoute>
               <ProtectedRoute>
                 <Quiz />
+              </ProtectedRoute>
+            </AnimatedRoute>
+          }
+        />
+
+        <Route
+          path="/enroll"
+          element={
+            <AnimatedRoute>
+              <ProtectedRoute>
+                <Enroll />
+              </ProtectedRoute>
+            </AnimatedRoute>
+          }
+        />
+
+        <Route
+          path="/payment"
+          element={
+            <AnimatedRoute>
+              <ProtectedRoute>
+                <Payment />
               </ProtectedRoute>
             </AnimatedRoute>
           }

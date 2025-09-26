@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+// Import useNavigate for navigation
+import { useNavigate } from "react-router-dom";
 import { ENDPOINTS } from "../utils/endpoints";
 import { toast } from "sonner";
 import Loader from "../components/Loader";
@@ -9,6 +11,9 @@ const AllCourses = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Initialize navigation hook
+  const navigate = useNavigate();
 
   // ✅ get admin from redux
   const { admin } = useSelector((state) => state.admin);
@@ -31,6 +36,22 @@ const AllCourses = () => {
 
     fetchCourses();
   }, []);
+
+  // New enrollment handler
+  const handleEnroll = (course) => {
+    const isFree = !course.price || Number(course.price) <= 0;
+
+    if (isFree) {
+      // If course is free, navigate to "/enroll"
+      navigate("/enroll", { state: { courseId: course._id } });
+    } else {
+      // If course is not free, navigate to "/payment"
+      navigate("/payment", {
+        state: { courseId: course._id, price: course.price },
+      });
+    }
+  };
+  // ------------------------------------------------------------------
 
   const handleDelete = async (id) => {
     toast.info(`Coming Soon`);
@@ -119,7 +140,8 @@ const AllCourses = () => {
                           </button>
                           <button
                             className="px-4 py-2 bg-blue-100 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-200 transition-colors duration-200"
-                            onClick={() => toast.info("Enrollment coming soon")}
+                            // Use the new handler and pass the course object
+                            onClick={() => handleEnroll(course)}
                           >
                             Enroll
                           </button>
