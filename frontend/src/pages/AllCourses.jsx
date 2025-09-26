@@ -99,18 +99,6 @@ const AllCourses = () => {
   return (
     <div className="mt-16">
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        {/* <div className="mb-16 text-center md:text-left">
-          <h1 className="text-4xl md:text-4xl font-semibold text-amber-500 uppercase mb-4 tracking-tight">
-            Explore Our Premier Course Catalog
-          </h1>
-          <p className="text-md md:text-md font-normal text-gray-600 leading-relaxed max-w-2xl">
-            Discover a meticulously curated collection of expert-led courses,
-            each designed to transform your potential into tangible mastery and
-            professional excellence.
-          </p>
-        </div> */}
-
         <div className=" flex ">
           <div className="md:w-1/2 px-4 pt-15">
             <h1 className="uppercase text-lg font-medium text-amber-500 tracking-widest pl-1">

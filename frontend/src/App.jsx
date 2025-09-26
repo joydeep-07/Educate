@@ -22,6 +22,7 @@ import Blog from "./pages/Blog";
 import CreateBlog from "./admin/CreateBlog";
 import CreateQuiz from "./admin/CreateQuiz";
 import UpdateCourse from "./admin/UpdateCourse";
+import { CourseDetails } from "./pages/CourseDetails";
 // Animated wrapper using GSAP
 const AnimatedRoute = ({ children }) => {
   const ref = useRef(null);
@@ -215,6 +216,15 @@ const AnimatedRoutes = () => {
           element={
             <AnimatedRoute>
               <Blog />
+            </AnimatedRoute>
+          }
+        />
+
+        <Route
+          path="/details/:id"
+          element={
+            <AnimatedRoute>
+              <CourseDetails />
             </AnimatedRoute>
           }
         />
