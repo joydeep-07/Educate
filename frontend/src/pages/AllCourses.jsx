@@ -15,7 +15,7 @@ const AllCourses = () => {
   // Initialize navigation hook
   const navigate = useNavigate();
 
-  // ✅ get admin from redux
+  // Ge Admin from redux
   const { admin } = useSelector((state) => state.admin);
 
   useEffect(() => {
@@ -37,21 +37,19 @@ const AllCourses = () => {
     fetchCourses();
   }, []);
 
-  // New enrollment handler
   const handleEnroll = (course) => {
     const isFree = !course.price || Number(course.price) <= 0;
 
     if (isFree) {
-      // If course is free, navigate to "/enroll"
       navigate("/enroll", { state: { courseId: course._id } });
     } else {
-      // If course is not free, navigate to "/payment"
       navigate("/payment", {
         state: { courseId: course._id, price: course.price },
       });
     }
   };
-  // ------------------------------------------------------------------
+ 
+
 
   const handleDelete = async (id) => {
     toast.info(`Coming Soon`);
