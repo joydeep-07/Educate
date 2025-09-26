@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ENDPOINTS } from "../utils/endpoints";
 import { toast } from "sonner";
 import Loader from "../components/Loader";
-import Error from "../components/Error";
+import ErrorC from "../components/Error";
 import { useSelector } from "react-redux";
 import brain from '../assets/animation/brain.json'
 import Lottie from "lottie-react";
@@ -53,9 +53,28 @@ const AllCourses = () => {
  
 
 
-  const handleDelete = async (id) => {
-    toast.info(`Coming Soon`);
-  };
+ const handleDelete = async (id) => {
+   if (!window.confirm("Are you sure you want to delete this course?")) return;
+
+   try {
+     const res = await fetch(ENDPOINTS.DELETE_COURSE(id), {
+       method: "DELETE",
+     });
+
+     if (!res.ok) {
+       throw new Error("Failed to delete course");
+     }
+
+     toast.success("Course deleted successfully");
+
+     // Remove the deleted course from state instantly (no need to refetch all)
+     setCourses((prev) => prev.filter((course) => course._id !== id));
+   } catch (err) {
+     console.error(err);
+     toast.error("Error deleting course");
+   }
+ };
+
 
   const handleUpdate = (id) => {
     toast.info(`Coming Soon`);
@@ -63,7 +82,7 @@ const AllCourses = () => {
   };
 
   if (loading) return <Loader />;
-  if (error) return <Error />;
+  if (error) return <ErrorC />;
   if (!courses.length) {
     return (
       <div className="mt-35 flex items-center justify-center">
