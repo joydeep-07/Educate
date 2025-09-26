@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { ENDPOINTS } from "../utils/endpoints";
 import { toast } from "sonner";
+import Loader from "../components/Loader";
+import Error from "../components/Error";
+
 const AllCourses = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,48 +28,20 @@ const AllCourses = () => {
     fetchCourses();
   }, []);
 
-  const truncateText = (text, maxLength) => {
-    if (text.length <= maxLength) return text;
-    return text.substr(0, maxLength) + "...";
-  };
-
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-xl text-gray-600">Loading courses...</p>
-        </div>
-      </div>
-    );
+    return <Loader />;
   }
 
   if (error) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="bg-red-100 border border-red-400 text-red-700 px-6 py-4 rounded-lg max-w-md">
-            <h3 className="font-bold text-lg mb-2">Error</h3>
-            <p>{error}</p>
-            <button
-              onClick={() => window.location.reload()}
-              className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
-            >
-              Try Again
-            </button>
-          </div>
-        </div>
-      </div>
-    );
+    return <Error />;
   }
 
   if (!courses.length) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className=" mt-35 flex items-center justify-center">
         <div className="text-center">
-          <div className="text-6xl mb-4">📚</div>
-          <h2 className="text-2xl font-bold text-gray-700 mb-2">
-            No Courses Found
+          <h2 className="text-2xl font-medium text-gray-600 mb-2">
+            No Courses available right now
           </h2>
           <p className="text-gray-500">Check back later for new courses!</p>
         </div>
@@ -75,14 +50,15 @@ const AllCourses = () => {
   }
 
   return (
-    <div className=" mt-15">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="mt-16 min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">All Courses</h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Discover our comprehensive collection of courses taught by expert
-            faculty members
+        <div className="text-center mb-16">
+          <h1 className="text-4xl font-light text-gray-700 mb-4 tracking-tight">
+            Our Courses
+          </h1>
+          <p className="text-gray-500 max-w-2xl mx-auto leading-relaxed">
+            Curated collection of expert-led courses designed for mastery
           </p>
         </div>
 
@@ -91,52 +67,52 @@ const AllCourses = () => {
           {courses.map((course) => (
             <div
               key={course._id}
-              className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden"
+              className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group border border-gray-100"
             >
               {/* Course Header */}
-              <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white">
-                <h2 className="text-xl font-bold mb-2 line-clamp-2">
+              <div className="p-6 bg-gradient-to-br from-blue-50 to-indigo-50">
+                <h2 className="text-xl font-semibold text-gray-800 mb-1 leading-tight">
                   {course.courseName}
                 </h2>
-                <div className="flex items-center justify-between">
-                  <span className="text-blue-100 text-sm font-medium">
-                    {course.facultyName}
-                  </span>
-                  <span className="bg-white text-blue-600 px-3 py-1 rounded-full text-sm font-bold">
-                    {course.price && Number(course.price) > 0
-                      ? `₹${Number(course.price).toFixed(2)}`
-                      : "Free"}
-                  </span>
-                </div>
+                <p className="text-sm text-gray-600 font-medium">
+                {course.facultyName}
+                </p>
               </div>
 
               {/* Course Content */}
               <div className="p-6">
-                {/* Faculty Bio */}
-                <div className="mb-4">
-                  <h3 className="text-sm font-semibold text-gray-500 mb-1">
-                    About Faculty
+                <div className="mb-6">
+                  <h3 className="text-xs font-medium text-gray-600 uppercase tracking-wide mb-2">
+                    About Course
                   </h3>
-                  <p className="text-gray-700 text-sm line-clamp-3">
-                    {course.bio || "No bio available"}
+                  <p className="text-gray-500 text-sm leading-relaxed">
+                    {course.bio || "About Course not Defined"}
                   </p>
                 </div>
 
-                {/* Action Buttons */}
-                <div className="flex gap-3">
-                  <button
-                    className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-200 transform hover:scale-105"
-                    onClick={() => toast.info("Under Construction")}
-                  >
-                    Join Now
-                  </button>
-
-                  <button
-                    className="flex-1 border border-gray-300 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 transition-all duration-200"
-                    onClick={() => toast.info("Under Construction")}
-                  >
-                    Details
-                  </button>
+                {/* Action Section with Price */}
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-xl font-medium text-emerald-700">
+                      {course.price && Number(course.price) > 0
+                        ? `₹${Number(course.price).toFixed(0)}`
+                        : "Free"}
+                    </span>
+                    <div className="flex gap-2">
+                      <button
+                        className="px-4 py-2 border border-gray-200 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-gray-300 transition-colors duration-200"
+                        onClick={() => toast.info("Under Construction")}
+                      >
+                        Details
+                      </button>
+                      <button
+                        className="px-4 py-2 bg-blue-100 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-200 transition-colors duration-200"
+                        onClick={() => toast.info("Under Construction")}
+                      >
+                        Enroll
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
