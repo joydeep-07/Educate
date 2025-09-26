@@ -1,5 +1,6 @@
 import Course from "../models/course.model.js";
 import mongoose from "mongoose";
+
 // Add a new course
 export const addCourse = async (req, res) => {
   try {
@@ -32,6 +33,28 @@ export const getCourses = async (req, res) => {
   try {
     const courses = await Course.find().sort({ createdAt: -1 });
     res.status(200).json(courses);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Get single course by ID
+export const getCourseById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid course ID" });
+    }
+
+    const course = await Course.findById(id);
+
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+
+    res.status(200).json(course);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });

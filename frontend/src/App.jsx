@@ -130,7 +130,7 @@ const AnimatedRoutes = () => {
         />
 
         <Route
-          path="/admin/updatecourse"
+          path="/admin/updatecourse/:id"
           element={
             <AnimatedRoute>
               <AdminRoute>

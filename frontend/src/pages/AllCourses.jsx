@@ -77,9 +77,9 @@ const AllCourses = () => {
 
 
   const handleUpdate = (id) => {
-    toast.info(`Coming Soon`);
-    // navigate(`/courses/update/${id}`) <-- if you have update page
+    navigate(`/admin/updatecourse/${id}`);
   };
+
 
   if (loading) return <Loader />;
   if (error) return <ErrorC />;

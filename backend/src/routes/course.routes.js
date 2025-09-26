@@ -2,6 +2,7 @@ import express from "express";
 import {
   addCourse,
   getCourses,
+  getCourseById, // create this in your controller
   updateCourse,
   deleteCourse,
 } from "../controller/course.controller.js";
@@ -13,6 +14,9 @@ router.post("/add", addCourse);
 
 // GET: Get all courses
 router.get("/", getCourses);
+
+// GET: Get course by ID
+router.get("/:id", getCourseById);
 
 // PUT: Update course by ID
 router.put("/:id", updateCourse);
