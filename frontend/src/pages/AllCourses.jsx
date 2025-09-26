@@ -85,14 +85,38 @@ const AllCourses = () => {
   if (error) return <ErrorC />;
   if (!courses.length) {
     return (
-      <div className="mt-35 flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-medium text-gray-600 mb-2">
-            No Courses available right now
-          </h2>
-          <p className="text-gray-500">Check back later for new courses!</p>
+      <>
+        <div className=" mt-10 pl-10 flex ">
+          <div className="md:w-1/2 px-4 pt-15">
+            <h1 className="uppercase text-lg font-medium text-amber-500 tracking-widest pl-1">
+              Explore Our Courses
+            </h1>
+            <h1 className="text-6xl md:text-[3.5rem] font-semibold text-gray-700">
+              All Courses <br /> Available Here
+            </h1>
+            <p className="max-w-lg pt-5 text-gray-600 leading-relaxed">
+              Browse our complete collection of expert-led courses. From
+              fundamentals to advanced topics, everything you need to level up
+              your skills is right here.
+            </p>
+          </div>
+
+          <div className="md:w-1/2 flex justify-center items-center">
+            {/* Banner here --- Comming Soon */}
+            <div className="flex h-100 w-100 flex-1 items-center justify-center">
+              <Lottie animationData={brain} loop autoplay className="" />
+            </div>
+          </div>
         </div>
-      </div>
+        <div className="py-10 flex items-center justify-center">
+          <div className="text-center">
+            <h2 className="text-2xl font-medium text-gray-600 mb-2">
+              No Courses available right now
+            </h2>
+            <p className="text-gray-500">Check back later for new courses!</p>
+          </div>
+        </div>
+      </>
     );
   }
 

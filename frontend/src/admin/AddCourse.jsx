@@ -214,22 +214,17 @@ const AddCourse = () => {
                 >
                   Category
                 </label>
-                <select
+                <input
+                  type="text"
                   id="category"
+                  placeholder="Enter category"
                   className={`block w-full px-2 py-1 border-b ${
                     errors.category ? "border-red-500" : "border-gray-300"
                   } focus:outline-none focus:border-blue-500 text-sm rounded-md`}
                   {...register("category", {
                     required: "Category is required",
                   })}
-                >
-                  <option value="">Select category</option>
-                  <option value="Web Development">Web Development</option>
-                  <option value="Data Science">Data Science</option>
-                  <option value="Mobile Development">Mobile Development</option>
-                  <option value="Design">Design</option>
-                  <option value="Other">Other</option>
-                </select>
+                />
                 {errors.category && (
                   <p className="mt-1 text-xs text-red-600">
                     {errors.category.message}

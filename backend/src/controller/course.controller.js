@@ -20,7 +20,7 @@ const { courseName, facultyName, bio, syllabus, price, duration, category } =
      duration,
      category,
    });
-   
+
     await newCourse.save();
 
     res
@@ -69,7 +69,15 @@ export const getCourseById = async (req, res) => {
 export const updateCourse = async (req, res) => {
   try {
     const { id } = req.params;
-    const { courseName, facultyName, bio, syllabus, price } = req.body;
+    const {
+      courseName,
+      facultyName,
+      bio,
+      syllabus,
+      price,
+      duration,
+      category,
+    } = req.body;
 
     if (bio && bio.trim().split(/\s+/).length > 20) {
       return res.status(400).json({ message: "Bio cannot exceed 20 words" });
@@ -77,13 +85,12 @@ export const updateCourse = async (req, res) => {
 
     const updatedCourse = await Course.findByIdAndUpdate(
       id,
-      { courseName, facultyName, bio, syllabus, price },
+      { courseName, facultyName, bio, syllabus, price, duration, category }, // ✅ include them here
       { new: true, runValidators: true }
     );
 
-    if (!updatedCourse) {
+    if (!updatedCourse)
       return res.status(404).json({ message: "Course not found" });
-    }
 
     res
       .status(200)
@@ -93,6 +100,7 @@ export const updateCourse = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
 
 // Delete course
 export const deleteCourse = async (req, res) => {
