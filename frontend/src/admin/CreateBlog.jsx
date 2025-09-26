@@ -37,7 +37,7 @@ const CreateBlog = () => {
   };
 
   return (
-    <div className="mt-15 mb-8 flex items-center justify-center p-4">
+    <div className="mt-10 mb-8 flex items-center justify-center p-4">
       <div className="w-full max-w-[1400px] overflow-hidden lg:grid lg:grid-cols-2 py-5 min-h-[500px]">
         {/* Left Side - Blog Form */}
         <div className="flex flex-col justify-center items-center p-4 sm:p-8">
