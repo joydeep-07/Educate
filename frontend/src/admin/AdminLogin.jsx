@@ -33,7 +33,7 @@ const AdminLogin = () => {
       // 🚀 Login as admin
       dispatch(loginAdmin(adminData));
 
-      navigate("/admin/panel");
+      navigate("/courses");
       setError("");
     } else {
       setError("Incorrect credentials. Please try again.");

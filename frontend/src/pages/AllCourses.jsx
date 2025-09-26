@@ -121,7 +121,7 @@ const AllCourses = () => {
   }
 
   return (
-    <div className="mt-16">
+    <div className="mt-10">
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className=" flex ">
           <div className="md:w-1/2 px-4 pt-15">
