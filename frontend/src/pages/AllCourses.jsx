@@ -117,12 +117,7 @@ const AllCourses = () => {
           <div className="md:w-1/2 flex justify-center items-center">
             {/* Banner here --- Comming Soon */}
             <div className="flex h-100 w-100 flex-1 items-center justify-center">
-              <Lottie
-                animationData={brain}
-                loop
-                autoplay
-                className=""
-              />
+              <Lottie animationData={brain} loop autoplay className="" />
             </div>
           </div>
         </div>
@@ -170,10 +165,11 @@ const AllCourses = () => {
                       <>
                         <button
                           className="px-4 py-2 border border-gray-200 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-gray-300 transition-colors duration-200"
-                          onClick={() => toast.info("Details page coming soon")}
+                          onClick={() => navigate(`/details/${course._id}`)}
                         >
                           Details
                         </button>
+
                         <button
                           className="px-4 py-2 bg-blue-100 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-200 transition-colors duration-200"
                           onClick={() => handleEnroll(course)}
@@ -187,11 +183,12 @@ const AllCourses = () => {
                     {admin && (
                       <>
                         <button
-                          className="px-4 py-2 border border-blue-100 bg-blue-100 text-gray-600 rounded-lg text-sm font-medium hover:bg-blue-50 hover:border-gray-300 transition-colors duration-200"
-                          onClick={() => toast.info("Details page coming soon")}
+                          className="px-4 py-2 border border-gray-200 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-gray-300 transition-colors duration-200"
+                          onClick={() => navigate(`/details/${course._id}`)}
                         >
                           Details
                         </button>
+
                         <button
                           className="px-4 py-2 bg-yellow-100 text-yellow-700 rounded-lg text-sm font-medium hover:bg-yellow-200 transition-colors duration-200"
                           onClick={() => handleUpdate(course._id)}

@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import Loader from "../components/Loader";
 
 const UpdateCourse = () => {
-  const { id } = useParams(); // Get course ID from URL
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const [course, setCourse] = useState(null);
@@ -17,6 +17,7 @@ const UpdateCourse = () => {
     facultyName: "",
     bio: "",
     price: "",
+    syllabus: "", // added syllabus
   });
 
   // Fetch course details
@@ -32,6 +33,7 @@ const UpdateCourse = () => {
           facultyName: data.facultyName || "",
           bio: data.bio || "",
           price: data.price || "",
+          syllabus: data.syllabus || "", // initialize syllabus
         });
       } catch (err) {
         console.error(err);
@@ -47,7 +49,7 @@ const UpdateCourse = () => {
   const handleChange = (e) => {
     if (e.target.name === "bio") {
       const words = e.target.value.split(/\s+/);
-      if (words.length > 20) return; // Limit to 20 words
+      if (words.length > 20) return; // limit bio to 20 words
     }
     setFormData((prev) => ({
       ...prev,
@@ -62,7 +64,7 @@ const UpdateCourse = () => {
 
     const payload = {
       ...formData,
-      price: formData.price ? Number(formData.price) : 0, // Ensure number
+      price: formData.price ? Number(formData.price) : 0,
     };
 
     try {
@@ -75,7 +77,7 @@ const UpdateCourse = () => {
       if (!res.ok) throw new Error("Failed to update course");
 
       toast.success("Course updated successfully");
-      navigate("/courses"); // Redirect back to course list
+      navigate("/courses");
     } catch (err) {
       console.error(err);
       toast.error(err.message);
@@ -90,6 +92,7 @@ const UpdateCourse = () => {
     <div className="max-w-2xl mx-auto mt-16 p-6 bg-white shadow-md rounded-lg">
       <h2 className="text-2xl font-semibold mb-6">Update Course</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Course Name */}
         <div>
           <label className="block text-gray-700 font-medium mb-1">
             Course Name
@@ -103,6 +106,8 @@ const UpdateCourse = () => {
             required
           />
         </div>
+
+        {/* Faculty Name */}
         <div>
           <label className="block text-gray-700 font-medium mb-1">
             Faculty Name
@@ -116,6 +121,8 @@ const UpdateCourse = () => {
             required
           />
         </div>
+
+        {/* Bio */}
         <div>
           <label className="block text-gray-700 font-medium mb-1">
             Bio (20 words max)
@@ -131,6 +138,8 @@ const UpdateCourse = () => {
             Words: {formData.bio.trim().split(/\s+/).filter(Boolean).length}/20
           </p>
         </div>
+
+        {/* Price */}
         <div>
           <label className="block text-gray-700 font-medium mb-1">
             Price (₹)
@@ -144,6 +153,23 @@ const UpdateCourse = () => {
             min="0"
           />
         </div>
+
+        {/* Syllabus */}
+        <div>
+          <label className="block text-gray-700 font-medium mb-1">
+            Syllabus
+          </label>
+          <textarea
+            name="syllabus"
+            value={formData.syllabus}
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded px-3 py-2 font-mono whitespace-pre-line"
+            rows={10}
+            placeholder="Enter syllabus. Use line breaks for sections."
+          />
+        </div>
+
+        {/* Submit button */}
         <button
           type="submit"
           disabled={submitting}
