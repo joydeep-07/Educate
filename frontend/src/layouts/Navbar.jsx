@@ -13,19 +13,20 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const adminLinks = [
-    { name: "Home", path: "/" },
-    { name: "All Courses", path: "/courses" },
+    { name: "Manage Courses", path: "/courses" },
+    { name: "Manage Blogs", path: "/blog" },
   ];
 
   const loggedInLinks = [
     { name: "All Courses", path: "/courses" },
     { name: "Quiz", path: "/quiz" },
+    { name: "Blog", path: "/blog" },
   ];
 
   const loggedOutLinks = [
     { name: "Home", path: "/" },
     { name: "All Courses", path: "/courses" },
-    { name: "About", path: "/about" },
+    { name: "Blog", path: "/blog" },
   ];
 
   const NavLink = ({ item, onClick }) => (

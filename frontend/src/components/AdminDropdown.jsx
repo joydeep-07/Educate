@@ -42,6 +42,8 @@ const AdminDropdown = () => {
   // Links for admin dropdown
   const links = [
     { name: "Add Course", icon: <CiCirclePlus />, path: "/admin/addcourse" },
+    { name: "New Blog", icon: <CiCirclePlus />, path: "/admin/createblog" },
+    { name: "New Quiz", icon: <CiCirclePlus />, path: "/admin/createquiz" },
     { name: "Send Newsletter", icon: <CiMail />, path: "/admin/newsletter" },
   ];
 

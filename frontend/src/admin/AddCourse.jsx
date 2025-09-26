@@ -3,7 +3,7 @@ import { FiBookOpen, FiLoader } from "react-icons/fi";
 import { useForm } from "react-hook-form";
 import AuthImagePattern from "../components/AuthImagePattern";
 import { ENDPOINTS } from "../utils/endpoints";
-
+import { toast } from "sonner";
 const AddCourse = () => {
   const {
     register,
@@ -16,7 +16,7 @@ const AddCourse = () => {
       facultyName: "",
       bio: "",
       syllabus: "",
-      price: "", // <-- new field
+      price: "", 
     },
   });
 
@@ -40,7 +40,7 @@ const AddCourse = () => {
 
       if (!res.ok) throw new Error(result.message);
 
-      alert(result.message);
+      toast.success(result.message);
       reset();
     } catch (err) {
       alert(err.message);
@@ -130,7 +130,7 @@ const AddCourse = () => {
                   htmlFor="price"
                   className="flex items-center text-gray-700 text-sm font-medium mb-1 gap-2"
                 >
-                  Price (Leave blank if free)
+                  Price
                 </label>
                 <input
                   id="price"
@@ -140,7 +140,7 @@ const AddCourse = () => {
                   className={`block w-full px-2 py-1 border-b ${
                     errors.price ? "border-red-500" : "border-gray-300"
                   } focus:outline-none focus:border-blue-500 text-sm rounded-md`}
-                  placeholder="Enter course price"
+                  placeholder="Enter Price or Leave black if Free"
                   {...register("price", {
                     min: { value: 0, message: "Price cannot be negative" },
                   })}

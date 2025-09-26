@@ -6,6 +6,8 @@ import { toast } from "sonner";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
 import { useSelector } from "react-redux";
+import brain from '../assets/animation/brain.json'
+import Lottie from "lottie-react";
 
 const AllCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -77,15 +79,45 @@ const AllCourses = () => {
 
   return (
     <div className="mt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl font-medium text-gray-800 mb-4 tracking-tight">
-            Our Courses
+        {/* <div className="mb-16 text-center md:text-left">
+          <h1 className="text-4xl md:text-4xl font-semibold text-amber-500 uppercase mb-4 tracking-tight">
+            Explore Our Premier Course Catalog
           </h1>
-          <p className="text-gray-500 max-w-2xl mx-auto leading-relaxed">
-            Curated collection of expert-led courses designed for mastery
+          <p className="text-md md:text-md font-normal text-gray-600 leading-relaxed max-w-2xl">
+            Discover a meticulously curated collection of expert-led courses,
+            each designed to transform your potential into tangible mastery and
+            professional excellence.
           </p>
+        </div> */}
+
+        <div className=" flex ">
+          <div className="md:w-1/2 px-4 pt-15">
+            <h1 className="uppercase text-lg font-medium text-amber-500 tracking-widest pl-1">
+              Explore Our Courses
+            </h1>
+            <h1 className="text-6xl md:text-[3.5rem] font-semibold text-gray-700">
+              All Courses <br /> Available Here
+            </h1>
+            <p className="max-w-lg pt-5 text-gray-600 leading-relaxed">
+              Browse our complete collection of expert-led courses. From
+              fundamentals to advanced topics, everything you need to level up
+              your skills is right here.
+            </p>
+          </div>
+
+          <div className="md:w-1/2 flex justify-center items-center">
+            {/* Banner here --- Comming Soon */}
+            <div className="flex h-100 w-100 flex-1 items-center justify-center">
+              <Lottie
+                animationData={brain}
+                loop
+                autoplay
+                className=""
+              />
+            </div>
+          </div>
         </div>
 
         {/* Courses Grid */}
@@ -93,7 +125,7 @@ const AllCourses = () => {
           {courses.map((course) => (
             <div
               key={course._id}
-              className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group border border-gray-100"
+              className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group border border-gray-100 flex flex-col"
             >
               {/* Course Header */}
               <div className="p-6 bg-gradient-to-br from-blue-50 to-indigo-50">
@@ -106,7 +138,7 @@ const AllCourses = () => {
               </div>
 
               {/* Course Content */}
-              <div className="p-6">
+              <div className="p-3 flex-1">
                 <div className="mb-6">
                   <h3 className="text-xs font-medium text-gray-600 uppercase tracking-wide mb-2">
                     About Course
@@ -115,55 +147,58 @@ const AllCourses = () => {
                     {course.bio || "About Course not Defined"}
                   </p>
                 </div>
+              </div>
 
-                {/* Action Section with Price */}
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-xl font-medium text-emerald-700">
-                      {course.price && Number(course.price) > 0
-                        ? `₹${Number(course.price).toFixed(0)}`
-                        : "Free"}
-                    </span>
-                    <div className="flex gap-2 flex-wrap">
-                      {/* Normal user buttons - ONLY SHOW IF NOT ADMIN */}
-                      {!admin && (
-                        <>
-                          <button
-                            className="px-4 py-2 border border-gray-200 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-gray-300 transition-colors duration-200"
-                            onClick={() =>
-                              toast.info("Details page coming soon")
-                            }
-                          >
-                            Details
-                          </button>
-                          <button
-                            className="px-4 py-2 bg-blue-100 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-200 transition-colors duration-200"
-                            // Use the new handler and pass the course object
-                            onClick={() => handleEnroll(course)}
-                          >
-                            Enroll
-                          </button>
-                        </>
-                      )}
+              {/* Action Section with Price - pushed to bottom */}
+              <div className="px-6 py-3 border-t border-gray-100 mt-auto">
+                <div className="flex justify-between items-center">
+                  <span className="text-xl font-medium text-emerald-700">
+                    {course.price && Number(course.price) > 0
+                      ? `₹${Number(course.price).toFixed(0)}`
+                      : "Free"}
+                  </span>
+                  <div className="flex gap-2 flex-wrap">
+                    {/* Normal user buttons */}
+                    {!admin && (
+                      <>
+                        <button
+                          className="px-4 py-2 border border-gray-200 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-gray-300 transition-colors duration-200"
+                          onClick={() => toast.info("Details page coming soon")}
+                        >
+                          Details
+                        </button>
+                        <button
+                          className="px-4 py-2 bg-blue-100 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-200 transition-colors duration-200"
+                          onClick={() => handleEnroll(course)}
+                        >
+                          Enroll
+                        </button>
+                      </>
+                    )}
 
-                      {/* Admin-only buttons */}
-                      {admin && (
-                        <>
-                          <button
-                            className="px-4 py-2 bg-yellow-100 text-yellow-700 rounded-lg text-sm font-medium hover:bg-yellow-200 transition-colors duration-200"
-                            onClick={() => handleUpdate(course._id)}
-                          >
-                            Update
-                          </button>
-                          <button
-                            className="px-4 py-2 bg-red-100 text-red-600 rounded-lg text-sm font-medium hover:bg-red-200 transition-colors duration-200"
-                            onClick={() => handleDelete(course._id)}
-                          >
-                            Delete
-                          </button>
-                        </>
-                      )}
-                    </div>
+                    {/* Admin-only buttons */}
+                    {admin && (
+                      <>
+                        <button
+                          className="px-4 py-2 border border-blue-100 bg-blue-100 text-gray-600 rounded-lg text-sm font-medium hover:bg-blue-50 hover:border-gray-300 transition-colors duration-200"
+                          onClick={() => toast.info("Details page coming soon")}
+                        >
+                          Details
+                        </button>
+                        <button
+                          className="px-4 py-2 bg-yellow-100 text-yellow-700 rounded-lg text-sm font-medium hover:bg-yellow-200 transition-colors duration-200"
+                          onClick={() => handleUpdate(course._id)}
+                        >
+                          Update
+                        </button>
+                        <button
+                          className="px-4 py-2 bg-red-100 text-red-600 rounded-lg text-sm font-medium hover:bg-red-200 transition-colors duration-200"
+                          onClick={() => handleDelete(course._id)}
+                        >
+                          Delete
+                        </button>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>

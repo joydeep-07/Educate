@@ -18,6 +18,9 @@ import AddCourse from "./admin/AddCourse";
 import SendNewsLetter from "./admin/SendNewsLetter";
 import Payment from "./pages/Payment";
 import Enroll from "./pages/Enroll";
+import Blog from "./pages/Blog";
+import CreateBlog from "./admin/CreateBlog";
+import CreateQuiz from "./admin/CreateQuiz";
 // Animated wrapper using GSAP
 const AnimatedRoute = ({ children }) => {
   const ref = useRef(null);
@@ -126,6 +129,28 @@ const AnimatedRoutes = () => {
         />
 
         <Route
+          path="/admin/createblog"
+          element={
+            <AnimatedRoute>
+              <AdminRoute>
+                <CreateBlog />
+              </AdminRoute>
+            </AnimatedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/createquiz"
+          element={
+            <AnimatedRoute>
+              <AdminRoute>
+                <CreateQuiz />
+              </AdminRoute>
+            </AnimatedRoute>
+          }
+        />
+
+        <Route
           path="/admin/newsletter"
           element={
             <AnimatedRoute>
@@ -169,6 +194,15 @@ const AnimatedRoutes = () => {
           element={
             <AnimatedRoute>
               <AllCourses />
+            </AnimatedRoute>
+          }
+        />
+
+        <Route
+          path="/blog"
+          element={
+            <AnimatedRoute>
+              <Blog />
             </AnimatedRoute>
           }
         />
