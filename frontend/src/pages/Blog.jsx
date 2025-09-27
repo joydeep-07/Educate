@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ENDPOINTS } from "../utils/endpoints";
 import Loader from "../components/Loader";
 import ErrorC from "../components/Error";
 import { useSelector } from "react-redux";
+import { toast } from "sonner";
 import brain from "../assets/animation/brain.json";
 import Lottie from "lottie-react";
 
@@ -11,8 +13,8 @@ const Blog = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Get Admin from redux
   const { admin } = useSelector((state) => state.admin);
+  const navigate = useNavigate();
 
   const fetchBlogs = async () => {
     try {
@@ -40,9 +42,7 @@ const Blog = () => {
         method: "DELETE",
       });
 
-      if (!res.ok) {
-        throw new Error("Failed to delete blog");
-      }
+      if (!res.ok) throw new Error("Failed to delete blog");
 
       toast.success("Blog deleted successfully");
       setBlogs((prev) => prev.filter((blog) => blog._id !== id));
@@ -121,7 +121,7 @@ const Blog = () => {
         </div>
 
         {/* Blogs Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
           {blogs.map((blog) => (
             <div
               key={blog._id}
@@ -156,7 +156,7 @@ const Blog = () => {
                 </div>
               </div>
 
-              {/* Action Section - pushed to bottom */}
+              {/* Action Section */}
               <div className="px-6 py-3 border-t border-gray-100 mt-auto">
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-medium text-gray-500">
@@ -167,7 +167,7 @@ const Blog = () => {
                     {!admin && (
                       <button
                         className="px-4 py-2 bg-blue-100 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-200 transition-colors duration-200"
-                        onClick={() => navigate(`/blog/${blog._id}`)}
+                        onClick={() => navigate(`/blog/details/${blog._id}`)}
                       >
                         Read More
                       </button>
@@ -178,7 +178,7 @@ const Blog = () => {
                       <>
                         <button
                           className="px-4 py-2 border border-gray-200 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-gray-300 transition-colors duration-200"
-                          onClick={() => navigate(`/blog/${blog._id}`)}
+                          onClick={() => navigate(`/blog/details/${blog._id}`)}
                         >
                           View
                         </button>
@@ -189,6 +189,7 @@ const Blog = () => {
                         >
                           Update
                         </button>
+
                         <button
                           className="px-4 py-2 bg-red-100 text-red-600 rounded-lg text-sm font-medium hover:bg-red-200 transition-colors duration-200"
                           onClick={() => handleDelete(blog._id)}
