@@ -165,7 +165,24 @@ const QuizQues = () => {
   return (
     <div className="max-w-4xl mt-10 mx-auto p-6">
       {/* Header */}
+      {/* Header */}
       <div className="bg-white rounded-lg shadow-sm border p-6 mb-6">
+        {/* User Info */}
+        {user && (
+          <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <p className="text-gray-800 font-semibold">
+              Name:{" "}
+              <span className="font-normal">
+                {user.firstname} {user.lastname}
+              </span>
+            </p>
+            <p className="text-gray-800 font-semibold">
+              Email: <span className="font-normal">{user.email}</span>
+            </p>
+          </div>
+        )}
+
+        {/* Quiz Title & Description */}
         <h1 className="text-3xl font-bold text-gray-800 mb-2">{quiz.title}</h1>
         <p className="text-gray-600 mb-4">{quiz.description}</p>
 
@@ -176,12 +193,12 @@ const QuizQues = () => {
               Progress: {Object.keys(answers).length}/{quiz.questions.length}{" "}
               questions
             </span>
-            <span>{progress}%</span>
+            <span>{calculateProgress()}%</span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2">
             <div
               className="bg-blue-500 h-2 rounded-full transition-all duration-300"
-              style={{ width: `${progress}%` }}
+              style={{ width: `${calculateProgress()}%` }}
             ></div>
           </div>
         </div>
@@ -203,7 +220,8 @@ const QuizQues = () => {
               </h3>
             </div>
 
-            <div className="space-y-3 ml-9">
+            {/* Grid layout for options */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 ml-9">
               {q.options.map((opt, oIndex) => (
                 <label
                   key={oIndex}
