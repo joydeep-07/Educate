@@ -3,6 +3,7 @@ import { FiFileText, FiLoader } from "react-icons/fi";
 import { useForm } from "react-hook-form";
 import AuthImagePattern from "../components/AuthImagePattern";
 import { toast } from "sonner";
+import { ENDPOINTS } from "../utils/endpoints"; // ✅ import API endpoints
 
 const CreateBlog = () => {
   const {
@@ -26,11 +27,24 @@ const CreateBlog = () => {
     setIsLoading(true);
 
     try {
-      console.log("Blog Data Submitted:", data);
-      toast.success("Blog data logged to console!");
+      const res = await fetch(ENDPOINTS.ADD_BLOG, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        throw new Error(result.message || "Failed to publish blog");
+      }
+
+      toast.success("Blog published successfully 🎉");
       reset();
     } catch (err) {
-      toast.error("Something went wrong");
+      toast.error(err.message || "Something went wrong");
     } finally {
       setIsLoading(false);
     }
