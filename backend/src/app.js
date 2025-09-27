@@ -3,9 +3,11 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 
-import authRoutes from "./routes/auth.routes.js"; // Keep if auth exists
+import authRoutes from "./routes/auth.routes.js";
 import courseRoutes from "./routes/course.routes.js";
 import blogRoutes from "./routes/blog.routes.js";
+import quizRoutes from "./routes/quiz.routes.js"; // 👈 Import quiz routes
+
 dotenv.config();
 
 const app = express();
@@ -25,7 +27,9 @@ app.get("/", (req, res) => {
   res.send("Hello from Express App 🚀");
 });
 
-app.use("/api/auth", authRoutes); // Keep if you have auth
+app.use("/api/auth", authRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/blogs", blogRoutes);
+app.use("/api/quizzes", quizRoutes); // 👈 Mount quiz routes
+
 export default app;
