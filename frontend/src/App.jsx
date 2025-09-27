@@ -24,6 +24,7 @@ import CreateQuiz from "./admin/CreateQuiz";
 import UpdateCourse from "./admin/UpdateCourse";
 import { CourseDetails } from "./pages/CourseDetails";
 import BlogDetails from "./pages/BlogDetails";
+import QuizQues from "./pages/QuizQues";
 // Animated wrapper using GSAP
 const AnimatedRoute = ({ children }) => {
   const ref = useRef(null);
@@ -93,6 +94,17 @@ const AnimatedRoutes = () => {
             <AnimatedRoute>
               <ProtectedRoute>
                 <Enroll />
+              </ProtectedRoute>
+            </AnimatedRoute>
+          }
+        />
+
+        <Route
+          path="/quiz/question/:id"
+          element={
+            <AnimatedRoute>
+              <ProtectedRoute>
+                <QuizQues />
               </ProtectedRoute>
             </AnimatedRoute>
           }
