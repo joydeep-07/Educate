@@ -9,7 +9,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginAdmin } from "../redux/slices/adminSlice";
-import { logout } from "../redux/slices/authSlice"; // 👈 clears user session
+import { logout } from "../redux/slices/authSlice"; 
 import Lottie from "lottie-react";
 import Heartrate from "../assets/animation/Analytics.json";
 
@@ -27,10 +27,10 @@ const AdminLogin = () => {
     if (password === "paul" && email === "admin@gmail.com") {
       const adminData = { email, role: "admin" };
 
-      // 🚨 If a user is logged in, force logout
+      //  If a user is logged in, force logout
       dispatch(logout());
 
-      // 🚀 Login as admin
+      //  Login as admin
       dispatch(loginAdmin(adminData));
 
       navigate("/courses");
