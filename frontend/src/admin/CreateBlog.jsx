@@ -18,6 +18,7 @@ const CreateBlog = () => {
       category: "",
       summary: "",
       content: "",
+      author: "",
     },
   });
 
@@ -145,6 +146,30 @@ const CreateBlog = () => {
                 {errors.category && (
                   <p className="mt-1 text-xs text-red-600">
                     {errors.category.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Author */}
+              <div>
+                <label
+                  htmlFor="author"
+                  className="text-gray-700 text-sm font-medium mb-1 block"
+                >
+                  Author
+                </label>
+                <input
+                  id="author"
+                  type="text"
+                  className={`block w-full px-2 py-1 border-b ${
+                    errors.author ? "border-red-500" : "border-gray-300"
+                  } focus:outline-none focus:border-blue-500 text-sm`}
+                  placeholder="Enter author name"
+                  {...register("author", { required: "Author is required" })}
+                />
+                {errors.author && (
+                  <p className="mt-1 text-xs text-red-600">
+                    {errors.author.message}
                   </p>
                 )}
               </div>
