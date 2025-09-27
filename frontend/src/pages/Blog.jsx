@@ -53,7 +53,8 @@ const Blog = () => {
   };
 
   const handleUpdate = (id) => {
-    navigate(`/admin/updateblog/${id}`);
+    // navigate(`/admin/updateblog/${id}`);
+    toast.info("Coming Soon !")
   };
 
   if (loading) return <Loader />;
