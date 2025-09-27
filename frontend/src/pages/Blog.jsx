@@ -5,7 +5,7 @@ import Loader from "../components/Loader";
 import ErrorC from "../components/Error";
 import { useSelector } from "react-redux";
 import { toast } from "sonner";
-import brain from "../assets/animation/brain.json";
+import brain from "../assets/animation/blog.json";
 import Lottie from "lottie-react";
 
 const Blog = () => {
@@ -116,7 +116,7 @@ const Blog = () => {
 
           <div className="md:w-1/2 flex justify-center items-center">
             <div className="flex h-100 w-100 flex-1 items-center justify-center">
-              <Lottie animationData={brain} loop autoplay className="" />
+              <Lottie animationData={brain} loop autoplay className="h-90" />
             </div>
           </div>
         </div>
