@@ -1,7 +1,7 @@
 import React from "react";
 import { FaGithub, FaLinkedin, FaFacebook, FaInstagram } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import logo from "../assets/images/logo.png";
+import logo from "../assets/images/logo1.png";
 
 const Footer = () => {
   return (
@@ -12,11 +12,11 @@ const Footer = () => {
           <div>
             <div className="flex items-center gap-2 cursor-pointer pb-5">
               <img
-                className="h-10 object-contain"
+                className="h-12 object-contain"
                 src={logo}
                 alt="Educate Logo"
               />
-              <h1 className="text-2xl font-semibold text-gray-800">Educate</h1>
+              <h1 className="text-2xl font-semibold text-gray-800">DEVOPS</h1>
             </div>
             <p className="text-sm text-gray-600">
               MERN Stack Developer crafting modern, scalable web applications.

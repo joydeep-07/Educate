@@ -1,6 +1,6 @@
 // src/layouts/Navbar.jsx
 import React, { useState } from "react";
-import logo from "../assets/images/logo.png";
+import logo from "../assets/images/logo1.png";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import UserDropdown from "../components/UserDropdown";
@@ -55,11 +55,11 @@ const Navbar = () => {
       <div className="max-w-8xl mx-auto px-6 md:px-12 flex justify-between items-center h-16">
         {/* Logo */}
         <div
-          className="flex items-center gap-1 cursor-pointer"
+          className="flex pl-12 items-center gap-1 cursor-pointer"
           onClick={() => navigate("/")}
         >
-          <img className="h-10 object-contain" src={logo} alt="Educate Logo" />
-          <h1 className="text-[25px] font-semibold text-gray-700">Educate</h1>
+          <img className="h-12 object-contain" src={logo} alt="Educate Logo" />
+          <h1 className="text-[25px] font-semibold text-gray-700">DEVOPS</h1>
         </div>
 
         {/* Right Side */}

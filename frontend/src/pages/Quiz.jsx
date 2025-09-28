@@ -2,12 +2,21 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ENDPOINTS } from "../utils/endpoints";
+import { toast } from "sonner";
+import Loader from "../components/Loader";
+import ErrorC from "../components/Error";
+import { useSelector } from "react-redux";
+import brain from "../assets/animation/brain.json";
+import Lottie from "lottie-react";
 
 const Quiz = () => {
   const [subjects, setSubjects] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  // Get Admin from redux
+  const { admin } = useSelector((state) => state.admin);
 
   useEffect(() => {
     const fetchSubjects = async () => {
@@ -17,9 +26,10 @@ const Quiz = () => {
           withCredentials: true,
         });
         setSubjects(res.data.subjects || []);
+        setError(null);
       } catch (err) {
         console.error("Error fetching subjects:", err);
-        setError("Failed to load subjects. Please try again.");
+        setError(err.message);
       } finally {
         setLoading(false);
       }
@@ -27,8 +37,37 @@ const Quiz = () => {
     fetchSubjects();
   }, []);
 
-  const handleClick = (subject) => {
+  const handleStartQuiz = (subject) => {
     navigate(`/quiz/question/${subject}`);
+  };
+
+  const handleDeleteSubject = async (subject) => {
+    if (!window.confirm(`Are you sure you want to delete the ${subject} quiz?`))
+      return;
+
+    try {
+      const res = await fetch(ENDPOINTS.DELETE_SUBJECT(subject), {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to delete subject");
+      }
+
+      toast.success("Quiz subject deleted successfully");
+      setSubjects((prev) => prev.filter((s) => s !== subject));
+    } catch (err) {
+      console.error(err);
+      toast.error("Error deleting quiz subject");
+    }
+  };
+
+  const handleCreateQuiz = () => {
+    navigate("/admin/create-quiz");
+  };
+
+  const handleUpdateQuiz = (subject) => {
+    navigate(`/admin/update-quiz/${subject}`);
   };
 
   // Color palette for subject cards
@@ -68,140 +107,199 @@ const Quiz = () => {
       if (subjectLower.includes(key)) return icon;
     }
 
-    // Default icons based on subject length or other criteria
     const defaultIcons = ["📖", "🎯", "🧠", "💡", "🌟"];
     return defaultIcons[subject.length % defaultIcons.length];
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600 text-lg">Loading subjects...</p>
-        </div>
-      </div>
-    );
-  }
+  if (loading) return <Loader />;
+  if (error) return <ErrorC />;
 
-  if (error) {
+  if (!subjects.length) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center">
-        <div className="text-center bg-white p-8 rounded-2xl shadow-lg max-w-md">
-          <div className="text-red-500 text-6xl mb-4">⚠️</div>
-          <h3 className="text-xl font-bold text-gray-800 mb-2">
-            Oops! Something went wrong
-          </h3>
-          <p className="text-gray-600 mb-4">{error}</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition duration-200"
-          >
-            Try Again
-          </button>
+      <>
+        <div className="mt-10 pl-10 flex">
+          <div className="md:w-1/2 px-4 pt-15">
+            <h1 className="uppercase text-lg font-medium text-amber-500 tracking-widest pl-1">
+              Explore Our Quizzes
+            </h1>
+            <h1 className="text-6xl md:text-[3.5rem] font-semibold text-gray-700">
+              All Quizzes <br /> Available Here
+            </h1>
+            <p className="max-w-lg pt-5 text-gray-600 leading-relaxed">
+              Test your knowledge with our interactive quizzes. From mathematics
+              to science, challenge yourself and track your progress across
+              various subjects.
+            </p>
+            {admin && (
+              <button
+                onClick={handleCreateQuiz}
+                className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors duration-200"
+              >
+                Create New Quiz
+              </button>
+            )}
+          </div>
+
+          <div className="md:w-1/2 flex justify-center items-center">
+            <div className="flex h-100 w-100 flex-1 items-center justify-center">
+              <Lottie animationData={brain} loop autoplay className="" />
+            </div>
+          </div>
         </div>
-      </div>
+        <div className="py-10 flex items-center justify-center">
+          <div className="text-center">
+            <h2 className="text-2xl font-medium text-gray-600 mb-2">
+              No quizzes available right now.
+            </h2>
+            <p className="text-gray-500">Check back later for new quizzes!</p>
+            {admin && (
+              <button
+                onClick={handleCreateQuiz}
+                className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors duration-200"
+              >
+                Create First Quiz
+              </button>
+            )}
+          </div>
+        </div>
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen mt-10 py-8 px-4">
-      <div className="max-w-6xl mx-auto">
-        {/* Header Section */}
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
-            Quiz Subjects
-          </h1>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Choose a subject to start testing your knowledge. Each quiz contains
-            carefully crafted questions to challenge your understanding.
-          </p>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mt-4 rounded-full"></div>
+    <div className="mt-10">
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex">
+          <div className="md:w-1/2 px-4 pt-15">
+            <h1 className="uppercase text-lg font-medium text-amber-500 tracking-widest pl-1">
+              Explore Our Quizzes
+            </h1>
+            <h1 className="text-6xl md:text-[3.5rem] font-semibold text-gray-700">
+              All Quizzes <br /> Available Here
+            </h1>
+            <p className="max-w-lg pt-5 text-gray-600 leading-relaxed">
+              Test your knowledge with our interactive quizzes. From mathematics
+              to science, challenge yourself and track your progress across
+              various subjects.
+            </p>
+            {admin && (
+              <button
+                onClick={handleCreateQuiz}
+                className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors duration-200"
+              >
+                Create New Quiz
+              </button>
+            )}
+          </div>
+
+          <div className="md:w-1/2 flex justify-center items-center">
+            <div className="flex h-100 w-100 flex-1 items-center justify-center">
+              <Lottie animationData={brain} loop autoplay className="" />
+            </div>
+          </div>
         </div>
 
-        {/* Subjects Grid */}
-        {subjects.length === 0 ? (
-          <div className="text-center bg-white rounded-2xl shadow-lg p-12">
-            <div className="text-6xl mb-4">📚</div>
-            <h3 className="text-2xl font-bold text-gray-800 mb-2">
-              No Subjects Available
-            </h3>
-            <p className="text-gray-600 mb-6">
-              It looks like there are no quiz subjects available at the moment.
-            </p>
-            <button
-              onClick={() => window.location.reload()}
-              className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg transition duration-200"
+        {/* Quizzes Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+          {subjects.map((subject, index) => (
+            <div
+              key={index}
+              className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group border border-gray-100 flex flex-col"
             >
-              Check Again
-            </button>
-          </div>
-        ) : (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
-              {subjects.map((subject, index) => (
-                <div
-                  key={index}
-                  onClick={() => handleClick(subject)}
-                  className="group cursor-pointer transform hover:scale-105 transition-all duration-300"
-                >
-                  <div
-                    className={`bg-gradient-to-br ${getRandomColor(
-                      index
-                    )} rounded-2xl shadow-lg overflow-hidden h-48 relative`}
-                  >
-                    {/* Background Pattern */}
-                    <div className="absolute inset-0 opacity-10">
-                      <div className="absolute top-4 right-4 w-16 h-16 bg-white rounded-full"></div>
-                      <div className="absolute bottom-4 left-4 w-12 h-12 bg-white rounded-full"></div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="relative z-10 p-6 h-full flex flex-col justify-between text-white">
-                      <div>
-                        <div className="text-4xl mb-3 transform group-hover:scale-110 transition-transform duration-300">
-                          {getSubjectIcon(subject)}
-                        </div>
-                        <h3 className="text-xl font-bold mb-2 line-clamp-2">
-                          {subject}
-                        </h3>
-                      </div>
-
-                      <div className="flex items-center justify-between">
-                        <span className="text-blue-100 text-sm font-medium">
-                          Start Quiz
-                        </span>
-                        <div className="transform group-hover:translate-x-2 transition-transform duration-300">
-                          <svg
-                            className="w-5 h-5"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M13 7l5 5m0 0l-5 5m5-5H6"
-                            />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Hover Effect */}
-                    <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+              {/* Quiz Header with Gradient */}
+              <div className={`p-6 bg-gradient-to-br ${getRandomColor(index)}`}>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h2 className="text-xl font-semibold text-white mb-1 leading-tight">
+                      {subject}
+                    </h2>
+                    <p className="text-sm text-blue-100 font-medium">
+                      Interactive Quiz
+                    </p>
+                  </div>
+                  <div className="text-3xl transform group-hover:scale-110 transition-transform duration-300">
+                    {getSubjectIcon(subject)}
                   </div>
                 </div>
-              ))}
+              </div>
+
+              {/* Quiz Content */}
+              <div className="p-6 flex-1">
+                <div className="mb-4">
+                  <h3 className="text-xs font-medium text-gray-600 uppercase tracking-wide mb-2">
+                    About This Quiz
+                  </h3>
+                  <p className="text-gray-500 text-sm leading-relaxed">
+                    Test your knowledge in {subject.toLowerCase()} with
+                    carefully crafted questions designed to challenge your
+                    understanding and help you learn.
+                  </p>
+                </div>
+
+                <div className="flex items-center text-sm text-gray-500 mt-4">
+                  <svg
+                    className="w-4 h-4 mr-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  <span>10-15 minutes</span>
+                </div>
+              </div>
+
+              {/* Action Section */}
+              <div className="px-6 py-4 border-t border-gray-100 mt-auto">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-medium text-gray-500">
+                    Multiple Choice
+                  </span>
+                  <div className="flex gap-2 flex-wrap">
+                    {/* Normal user button */}
+                    {!admin && (
+                      <button
+                        className="px-4 py-2 bg-blue-100 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-200 transition-colors duration-200"
+                        onClick={() => handleStartQuiz(subject)}
+                      >
+                        Start Quiz
+                      </button>
+                    )}
+
+                    {/* Admin-only buttons */}
+                    {admin && (
+                      <>
+                        <button
+                          className="px-4 py-2 bg-blue-100 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-200 transition-colors duration-200"
+                          onClick={() => handleStartQuiz(subject)}
+                        >
+                          Take Quiz
+                        </button>
+                        <button
+                          className="px-4 py-2 bg-yellow-100 text-yellow-700 rounded-lg text-sm font-medium hover:bg-yellow-200 transition-colors duration-200"
+                          onClick={() => handleUpdateQuiz(subject)}
+                        >
+                          Update
+                        </button>
+                        <button
+                          className="px-4 py-2 bg-red-100 text-red-600 rounded-lg text-sm font-medium hover:bg-red-200 transition-colors duration-200"
+                          onClick={() => handleDeleteSubject(subject)}
+                        >
+                          Delete
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
-
-            
-          </>
-        )}
-
-        {/* Footer Info */}
-       
+          ))}
+        </div>
       </div>
     </div>
   );

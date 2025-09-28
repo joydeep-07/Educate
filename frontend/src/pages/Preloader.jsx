@@ -29,7 +29,7 @@ const PreLoader = () => {
 
       const fontSize = isMobile ? 40 : 80;
       const letterSpacing = isMobile ? 30 : 65;
-      const text = "EDUCATE";
+      const text = "DEVOPS";
       const letters = text.split("");
 
       const positions = letters.map((_, i) => ({
