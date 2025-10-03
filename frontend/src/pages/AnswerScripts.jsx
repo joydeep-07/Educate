@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import { ENDPOINTS } from "../utils/endpoints";
 import Loader from "../components/Loader";
@@ -111,3 +112,14 @@ const AnswerScripts = () => {
 };
 
 export default AnswerScripts;
+=======
+import React from 'react'
+
+const AnswerScripts = () => {
+  return (
+    <div className='mt-25 text-5xl text-center'>AnswerScripts</div>
+  )
+}
+
+export default AnswerScripts
+>>>>>>> 02a8cc3ec6f8d1dd2a56e00a78eb8c7f98daf4d6
