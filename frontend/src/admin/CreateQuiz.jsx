@@ -142,14 +142,6 @@ const CreateQuiz = () => {
                 <h3 className="text-xl font-semibold text-gray-800">
                   Questions ({questions.length})
                 </h3>
-                <button
-                  type="button"
-                  onClick={addQuestion}
-                  className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-200"
-                >
-                  
-                  Add Question
-                </button>
               </div>
 
               {/* Questions List */}
@@ -259,7 +251,15 @@ const CreateQuiz = () => {
             </div>
 
             {/* Submit Button */}
-            <div className="flex justify-end pt-6 border-t">
+            <div className="flex gap-5 justify-end pt-6 border-t">
+              <button
+                type="button"
+                onClick={addQuestion}
+                className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-200"
+              >
+                Add Question
+              </button>
+
               <button
                 type="submit"
                 disabled={loading}
@@ -310,8 +310,6 @@ const CreateQuiz = () => {
             </div>
           </form>
         </div>
-
-        
       </div>
     </div>
   );
