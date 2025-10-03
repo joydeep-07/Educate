@@ -44,6 +44,7 @@ const AdminDropdown = () => {
     { name: "Add Course", icon: <CiCirclePlus />, path: "/admin/addcourse" },
     { name: "New Blog", icon: <CiCirclePlus />, path: "/admin/createblog" },
     { name: "New Quiz", icon: <CiCirclePlus />, path: "/admin/createquiz" },
+    { name: "Answer Scripts", icon: <CiCirclePlus />, path: "/admin/answerscripts" },
     { name: "Send Newsletter", icon: <CiMail />, path: "/admin/newsletter" },
   ];
 
