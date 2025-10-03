@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { ENDPOINTS } from "../utils/endpoints";
+import brain from "../assets/animation/brain.json";
+import Lottie from "lottie-react";
 
 const CreateQuiz = () => {
   const [subject, setSubject] = useState("");
@@ -62,19 +64,32 @@ const CreateQuiz = () => {
   };
 
   return (
-    <div className="min-h-screen mt-10 py-8 px-4">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen py-8 px-4">
+      <div className="max-w-8xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">
-            Create New Quiz
-          </h1>
-          <p className="text-gray-600">
-            Build engaging quizzes with multiple choice questions
-          </p>
+        <div className=" mt-10 pl-10 flex ">
+          <div className="md:w-1/2 px-4 pt-15">
+            <h1 className="uppercase text-lg font-medium text-amber-500 tracking-widest pl-1">
+              Explore Our Courses
+            </h1>
+            <h1 className="text-6xl md:text-[3.5rem] font-semibold text-gray-700">
+              Create Question <br /> All Subjects Here
+            </h1>
+            <p className="max-w-lg pt-5 text-gray-600 leading-relaxed">
+              Browse our complete collection of expert-led courses. From
+              fundamentals to advanced topics, everything you need to level up
+              your skills is right here.
+            </p>
+          </div>
+
+          <div className="md:w-1/2 flex justify-center items-center">
+            {/* Banner here --- Comming Soon */}
+            <div className="flex h-100 w-100 flex-1 items-center justify-center">
+              <Lottie animationData={brain} loop autoplay className="" />
+            </div>
+          </div>
         </div>
 
-       
         {/* Quiz Form */}
         <div className="bg-white rounded-2xl shadow-xl p-6 mb-6">
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -308,35 +323,7 @@ const CreateQuiz = () => {
           </form>
         </div>
 
-        {/* Info Card */}
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-          <div className="flex items-start gap-3">
-            <svg
-              className="w-5 h-5 text-blue-600 mt-0.5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-            <div>
-              <h4 className="font-medium text-blue-800">
-                Tips for creating great quizzes
-              </h4>
-              <ul className="text-sm text-blue-600 mt-1 space-y-1">
-                <li>• Write clear and concise questions</li>
-                <li>• Make sure options are distinct from each other</li>
-                <li>• Double-check the correct answers</li>
-                <li>• Add enough questions to properly assess knowledge</li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        
       </div>
     </div>
   );

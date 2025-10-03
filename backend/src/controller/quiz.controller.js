@@ -1,8 +1,7 @@
 // quiz.controller.js
 const mongoose = require("mongoose");
 const { Quiz, Submission } = require("../models/quiz.model.js");
-const Student =
-  require("./../models/student.model") || require("../models/student.model"); // adapt path if needed
+const Student = require("./../models/student.model") || require("../models/student.model"); 
 
 // Helper: remove correctIndex from questions before sending to student
 function hideAnswersFromQuiz(quizDoc) {
@@ -16,10 +15,10 @@ function hideAnswersFromQuiz(quizDoc) {
   return quiz;
 }
 
-/**
- * Create a new quiz (admin)
- * body: { subject, title, description, questions: [{ text, options[4], correctIndex, marks?, explanation? }, ...] }
- */
+
+//   Create a new quiz (admin)
+//   body: { subject, title, description, questions: [{ text, options[4], correctIndex, marks?, explanation? }, ...] }
+ 
 const createQuiz = async (req, res) => {
   try {
     const { subject, title, description, questions = [] } = req.body;
@@ -201,10 +200,7 @@ const deleteQuestion = async (req, res) => {
  */
 const getSubjects = async (req, res) => {
   try {
-    // Option A: distinct subject names:
     const subjects = await Quiz.distinct("subject");
-    // Optionally, include quizzes per subject:
-    // const bySubject = await Quiz.aggregate([...])
     return res.status(200).json({ subjects });
   } catch (err) {
     console.error("getSubjects err:", err);

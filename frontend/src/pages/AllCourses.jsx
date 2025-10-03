@@ -108,6 +108,8 @@ const AllCourses = () => {
             </div>
           </div>
         </div>
+
+        
         <div className="py-10 flex items-center justify-center">
           <div className="text-center">
             <h2 className="text-2xl font-medium text-gray-600 mb-2">
