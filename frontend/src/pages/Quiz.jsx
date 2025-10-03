@@ -230,9 +230,7 @@ const Quiz = () => {
                     About This Quiz
                   </h3>
                   <p className="text-gray-500 text-sm leading-relaxed">
-                    Test your knowledge in {subject.toLowerCase()} with
-                    carefully crafted questions designed to challenge your
-                    understanding and help you learn.
+                    {`Test your knowledge in ${subject}. This quiz covers various topics and is designed to challenge and educate.`}
                   </p>
                 </div>
 
