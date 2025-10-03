@@ -257,18 +257,30 @@ const submitQuiz = async (req, res) => {
         .json({ message: "studentId, quizId and answers are required" });
     }
 
-    // Ensure student exists
+    // ✅ Ensure student exists
     const student = await Student.findById(studentId);
     if (!student) return res.status(404).json({ message: "Student not found" });
 
+    // ✅ Ensure quiz exists
     const quiz = await Quiz.findById(quizId);
     if (!quiz) return res.status(404).json({ message: "Quiz not found" });
+
+    // ✅ Prevent multiple submissions (one attempt per quiz per student)
+    const existing = await Submission.findOne({
+      student: studentId,
+      quiz: quizId,
+    });
+    if (existing) {
+      return res.status(400).json({
+        message:
+          "You have already submitted this quiz. Only one attempt allowed.",
+      });
+    }
 
     // Build map of questions for quick lookup
     const questionMap = new Map();
     for (const q of quiz.questions) questionMap.set(String(q._id), q);
 
-    let totalMarks = 0;
     let obtainedMarks = 0;
     const savedAnswers = [];
 
@@ -276,7 +288,7 @@ const submitQuiz = async (req, res) => {
       const { questionId, selectedIndex } = ans;
       const q = questionMap.get(String(questionId));
       if (!q) {
-        // ignore or treat as wrong; we'll include as wrong with 0 marks
+        // invalid question -> mark wrong
         savedAnswers.push({
           question: questionId,
           selectedIndex: selectedIndex != null ? selectedIndex : null,
@@ -285,7 +297,7 @@ const submitQuiz = async (req, res) => {
         });
         continue;
       }
-      totalMarks += q.marks || 1;
+
       const correct = q.correctIndex === selectedIndex;
       const marksObtained = correct ? q.marks || 1 : 0;
       if (correct) obtainedMarks += marksObtained;
@@ -298,19 +310,10 @@ const submitQuiz = async (req, res) => {
       });
     }
 
-    // For any questions not answered, include them as unanswered (optional)
-    // (If you require students to answer all, you can validate earlier)
-    const answeredQuestionIds = new Set(
-      answers.map((a) => String(a.questionId))
-    );
-    for (const q of quiz.questions) {
-      if (!answeredQuestionIds.has(String(q._id))) {
-        totalMarks += 0; // already accounted? to keep total consistent, ensure totalMarks equals sum of marks across questions
-      }
-    }
-    // Better compute totalMarks as sum of marks in quiz
-    totalMarks = quiz.questions.reduce((s, q) => s + (q.marks || 1), 0);
+    // ✅ Always compute totalMarks from quiz definition
+    const totalMarks = quiz.questions.reduce((s, q) => s + (q.marks || 1), 0);
 
+    // Save submission
     const submission = new Submission({
       student: student._id,
       quiz: quiz._id,
@@ -322,7 +325,7 @@ const submitQuiz = async (req, res) => {
 
     await submission.save();
 
-    // Return score and optionally per-question correctness (but not correct answers themselves)
+    // Return summary
     const resultSummary = {
       submissionId: submission._id,
       quizId: quiz._id,
@@ -344,6 +347,7 @@ const submitQuiz = async (req, res) => {
       .json({ message: "Server error", error: err.message });
   }
 };
+
 
 /**
  * Admin: fetch submissions with student names and quiz subject/title
