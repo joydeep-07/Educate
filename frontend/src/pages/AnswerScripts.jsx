@@ -15,6 +15,8 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import brain from "../assets/animation/Questions.json";
 import Lottie from "lottie-react";
+import downloadExcel from "../utils/download";
+
 /**
  * Formats a date string into a readable format like "1st October 2025".
  * Uses Intl.DateTimeFormat for a cleaner month/year format.
@@ -416,9 +418,7 @@ const AnswerScripts = () => {
                   </span>
                   <div className="flex items-center space-x-4">
                     <button
-                      onClick={() =>
-                        toast.info("Download Feature coming soon!")
-                      }
+                      onClick={() => downloadExcel(sortedData)}
                       className="flex items-center space-x-1 text-gray-600 hover:text-gray-800 transition-colors duration-200"
                     >
                       <Download className="w-4 h-4" />
