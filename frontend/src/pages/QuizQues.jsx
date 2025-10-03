@@ -163,13 +163,14 @@ const QuizQues = () => {
   const progress = calculateProgress();
 
   return (
-    <div className="max-w-4xl mt-10 mx-auto p-6">
+    <div className="max-w-7xl mt-10 mx-auto p-6">
       {/* Header */}
       {/* Header */}
-      <div className="bg-white rounded-lg shadow-sm border p-6 mb-6">
+      <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
         {/* User Info */}
         {user && (
           <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <p>You will be sumbitting this Answer Script as :</p>
             <p className="text-gray-800 font-semibold">
               Name:{" "}
               <span className="font-normal">
@@ -183,25 +184,9 @@ const QuizQues = () => {
         )}
 
         {/* Quiz Title & Description */}
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">{quiz.title}</h1>
-        <p className="text-gray-600 mb-4">{quiz.description}</p>
-
-        {/* Progress Bar */}
-        <div className="mb-2">
-          <div className="flex justify-between text-sm text-gray-600 mb-1">
-            <span>
-              Progress: {Object.keys(answers).length}/{quiz.questions.length}{" "}
-              questions
-            </span>
-            <span>{calculateProgress()}%</span>
-          </div>
-          <div className="w-full bg-gray-200 rounded-full h-2">
-            <div
-              className="bg-blue-500 h-2 rounded-full transition-all duration-300"
-              style={{ width: `${calculateProgress()}%` }}
-            ></div>
-          </div>
-        </div>
+        <h1 className="text-3xl font-bold text-gray-700 mb-2">{quiz.subject}</h1>
+        <p className="text-gray-600 mb-4">{quiz.title}</p>
+      
       </div>
 
       {/* Questions */}
@@ -209,7 +194,7 @@ const QuizQues = () => {
         {quiz.questions.map((q, qIndex) => (
           <div
             key={q._id}
-            className="bg-white rounded-lg shadow-sm border p-6 hover:shadow-md transition-shadow"
+            className="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow"
           >
             <div className="flex items-start mb-4">
               <span className="bg-blue-100 text-blue-800 font-semibold px-3 py-1 rounded-full text-sm mr-3">
