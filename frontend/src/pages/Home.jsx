@@ -39,10 +39,9 @@ const Home = () => {
 
           {/* Right Image Section */}
           <div className="image flex justify-center mt-8 md:mt-0">
-            <Three/>
+            <Three />
           </div>
         </div>
-       
       </div>
 
       {/* <About/> */}

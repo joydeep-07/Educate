@@ -13,7 +13,8 @@ import Loader from "../components/Loader";
 import ErrorC from "../components/Error";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
-
+import brain from "../assets/animation/Questions.json";
+import Lottie from "lottie-react";
 /**
  * Formats a date string into a readable format like "1st October 2025".
  * Uses Intl.DateTimeFormat for a cleaner month/year format.
@@ -186,14 +187,34 @@ const AnswerScripts = () => {
     <div className="min-h-screen mt-10 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-8xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4 ">
-            Answer Scripts
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Review and manage student submissions with detailed performance
-            insights
-          </p>
+
+        <div className="flex flex-col md:flex-row items-center md:items-start md:space-x-12 pb-12 px-4 md:px-8">
+          {/* Text Section */}
+          <div className="md:w-1/2 space-y-4">
+            <h2 className="uppercase text-sm md:text-base font-semibold text-amber-500 tracking-widest">
+              Explore Answer Scripts
+            </h2>
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-800 leading-tight">
+              All Answer Scripts <br /> Submission Available Here
+            </h1>
+            <p className="text-gray-600 max-w-lg leading-relaxed mt-4">
+              Browse our complete collection of insightful blogs. From industry
+              trends to expert opinions, everything you need to stay informed is
+              right here.
+            </p>
+          </div>
+
+          {/* Lottie Animation Section */}
+          <div className="md:w-1/2 flex justify-center items-center mt-8 md:mt-0">
+            <div className="h-80 w-full flex justify-center items-center">
+              <Lottie
+                animationData={brain}
+                loop
+                autoplay
+                className="h-full w-auto"
+              />
+            </div>
+          </div>
         </div>
 
         {/* No Submissions State */}
@@ -395,11 +416,13 @@ const AnswerScripts = () => {
                   </span>
                   <div className="flex items-center space-x-4">
                     <button
-                      onClick={() => toast.info("Export Feature coming soon!")}
+                      onClick={() =>
+                        toast.info("Download Feature coming soon!")
+                      }
                       className="flex items-center space-x-1 text-gray-600 hover:text-gray-800 transition-colors duration-200"
                     >
-                      <Download className="w-4 h-4" /> {/* Lucide Icon */}
-                      <span>Export</span>
+                      <Download className="w-4 h-4" />
+                      <span className="pl-2">Download Excel</span>
                     </button>
                   </div>
                 </div>
