@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/auth.routes.js";
 import courseRoutes from "./routes/course.routes.js";
 import blogRoutes from "./routes/blog.routes.js";
-import quizRoutes from "./routes/quiz.routes.js"; // 👈 Import quiz routes
+import quizRoutes from "./routes/quiz.routes.js";
 
 dotenv.config();
 
@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:5173", // your React dev server
+    origin: "http://localhost:5173", 
     credentials: true,
   })
 );
@@ -30,6 +30,6 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/blogs", blogRoutes);
-app.use("/api/quizzes", quizRoutes); // 👈 Mount quiz routes
+app.use("/api/quizzes", quizRoutes); 
 
 export default app;
