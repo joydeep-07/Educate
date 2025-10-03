@@ -2,18 +2,17 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import {
   FileText,
   Search,
-  ArrowDown, 
+  ArrowDown,
   FileDigit,
-  Download, 
-  User, 
+  Download,
+  User,
 } from "lucide-react";
 
 import { ENDPOINTS } from "../utils/endpoints";
 import Loader from "../components/Loader";
 import ErrorC from "../components/Error";
 import { toast } from "sonner";
-
-
+import { useNavigate } from "react-router-dom";
 
 /**
  * Formats a date string into a readable format like "1st October 2025".
@@ -71,6 +70,7 @@ const AnswerScripts = () => {
   const [error, setError] = useState(null);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
   // Data Fetching
   useEffect(() => {
@@ -279,7 +279,9 @@ const AnswerScripts = () => {
                       <tr
                         key={submission._id || index}
                         className="hover:bg-indigo-200/10 transition-all duration-200 group cursor-pointer"
-                        onClick={() => toast.info("Feature coming soon!")}
+                        onClick={() =>
+                          navigate(`/admin/anspage/${submission._id}`)
+                        }
                       >
                         {/* # Column */}
                         <td className="px-6 py-4 whitespace-nowrap">
