@@ -115,7 +115,7 @@ const AnsPage = () => {
   const scorePercentage = calculateScorePercentage();
 
   return (
-    <div className="min-h-screen py-8">
+    <div className="min-h-screen py-8 mt-5">
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-8">
@@ -130,44 +130,77 @@ const AnsPage = () => {
         {/* Summary Cards */}
 
         <div className="bg-white shadow-lg rounded-2xl p-6 mb-6 border border-gray-200">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-space-between space-y-4 md:space-y-0 md:space-x-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Student Info */}
-            <div className="flex flex-col">
-              <p className="text-gray-400 text-xs uppercase font-semibold mb-1">
-                Student
-              </p>
-              <p className="text-lg font-bold text-gray-900">
-                {submission.student.firstname} {submission.student.lastname}
-              </p>
-              <p className="text-sm text-gray-500 truncate">
-                {submission.student.email}
-              </p>
+            <div className="flex items-center space-x-4 p-4 bg-blue-50 rounded-xl border border-blue-100">
+              <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                <User className="h-6 w-6 text-blue-600" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-blue-600 text-xs uppercase font-semibold tracking-wide">
+                  Student
+                </p>
+                <p className="text-lg font-medium text-gray-700 truncate">
+                  {submission.student.firstname} {submission.student.lastname}
+                </p>
+                <p className="text-sm text-gray-600 truncate mt-1">
+                  {submission.student.email}
+                </p>
+              </div>
             </div>
 
             {/* Quiz Info */}
-            <div className="flex flex-col">
-              <p className="text-gray-400 text-xs uppercase font-semibold mb-1">
-                Quiz
-              </p>
-              <p className="text-lg font-bold text-gray-900">
-                {submission.quiz.subject}
-              </p>
-              <p className="text-sm text-gray-500">{submission.quiz.title}</p>
+            <div className="flex items-center space-x-4 p-4 bg-purple-50 rounded-xl border border-purple-100">
+              <div className="flex-shrink-0 w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                <BookOpen className="h-6 w-6 text-purple-600" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-purple-600 text-xs uppercase font-semibold mb-0 tracking-wide">
+                  Quiz
+                </p>
+                <p className="text-lg font-medium text-gray-700 truncate">
+                  {submission.quiz.subject}
+                </p>
+                <p className="text-sm text-gray-600 truncate mt-1">
+                  {submission.quiz.title}
+                </p>
+              </div>
             </div>
 
-           
-
             {/* Submission Date */}
-            <div className="flex flex-col">
-              <p className="text-gray-400 text-xs uppercase font-semibold mb-1">
-                Submitted
-              </p>
-              <p className="text-lg font-bold text-gray-900">
-                {new Date(submission.createdAt).toLocaleDateString()}
-              </p>
-              <p className="text-sm text-gray-500">
-                {new Date(submission.createdAt).toLocaleTimeString()}
-              </p>
+            <div className="flex items-center space-x-4 p-4 bg-green-50 rounded-xl border border-green-100">
+              <div className="flex-shrink-0 w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                <Calendar className="h-6 w-6 text-green-600" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-green-600 text-xs uppercase font-semibold tracking-wide">
+                  Submitted
+                </p>
+                <p className="text-lg font-medium text-gray-700">
+                  {new Date(submission.createdAt)
+                    .toLocaleDateString("en-US", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })
+                    .replace(/(\d+)(?= )/, (d) => {
+                      // Add ordinal (st, nd, rd, th) to day
+                      const day = parseInt(d);
+                      if (day === 1 || day === 21 || day === 31)
+                        return day + "st";
+                      if (day === 2 || day === 22) return day + "nd";
+                      if (day === 3 || day === 23) return day + "rd";
+                      return day + "th";
+                    })}
+                </p>
+                <p className="text-sm text-gray-600 mt-1">
+                  {new Date(submission.createdAt).toLocaleTimeString("en-US", {
+                    hour: "numeric",
+                    minute: "numeric",
+                    hour12: true,
+                  })}
+                </p>
+              </div>
             </div>
           </div>
         </div>
