@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
-// Import Lucide icons
 import {
-  FileText, // Used for 'No Submissions Found'
-  Search, // Used for the Search Input
-  ArrowDown, // Used for Sort Indicator
-  FileDigit, // Used for Table Count
-  Download, // Used for Export
-  User, // Fallback for student initial (optional, kept the original initial logic)
+  FileText,
+  Search,
+  ArrowDown, 
+  FileDigit,
+  Download, 
+  User, 
 } from "lucide-react";
 
 import { ENDPOINTS } from "../utils/endpoints";
@@ -14,7 +13,7 @@ import Loader from "../components/Loader";
 import ErrorC from "../components/Error";
 import { toast } from "sonner";
 
-// --- Helper Functions (moved outside the component for clarity/reusability) ---
+
 
 /**
  * Formats a date string into a readable format like "1st October 2025".
