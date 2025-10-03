@@ -166,27 +166,41 @@ const QuizQues = () => {
     <div className="max-w-7xl mt-10 mx-auto p-6">
       {/* Header */}
       {/* Header */}
-      <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+      <div className="bg-white rounded-xl shadow-md border border-gray-100 p-6 mb-6">
         {/* User Info */}
         {user && (
-          <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-            <p>You will be sumbitting this Answer Script as :</p>
-            <p className="text-gray-800 font-semibold">
-              Name:{" "}
-              <span className="font-normal">
-                {user.firstname} {user.lastname}
-              </span>
+          <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-lg shadow-sm">
+            <p className="text-sm text-blue-600 font-medium mb-3">
+              You will be submitting this Answer Script as:
             </p>
-            <p className="text-gray-800 font-semibold">
-              Email: <span className="font-normal">{user.email}</span>
-            </p>
+            <div className="space-y-2">
+              <div className="flex items-center">
+                <span className="text-gray-700 font-semibold min-w-[60px]">
+                  Name:
+                </span>
+                <span className="text-gray-900 font-medium ml-2">
+                  {user.firstname} {user.lastname}
+                </span>
+              </div>
+              <div className="flex items-center">
+                <span className="text-gray-700 font-semibold min-w-[60px]">
+                  Email:
+                </span>
+                <span className="text-gray-900 font-medium ml-2">
+                  {user.email}
+                </span>
+              </div>
+            </div>
           </div>
         )}
 
         {/* Quiz Title & Description */}
-        <h1 className="text-3xl font-bold text-gray-700 mb-2">{quiz.subject}</h1>
-        <p className="text-gray-600 mb-4">{quiz.title}</p>
-      
+        <div className="border-l-3 rounded-lg border-blue-500 pl-4 mb-4">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">
+            {quiz.subject}
+          </h1>
+          <p className="text-gray-600 text-lg leading-relaxed">{quiz.title}</p>
+        </div>
       </div>
 
       {/* Questions */}
