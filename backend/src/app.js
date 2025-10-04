@@ -7,7 +7,7 @@ import authRoutes from "./routes/auth.routes.js";
 import courseRoutes from "./routes/course.routes.js";
 import blogRoutes from "./routes/blog.routes.js";
 import quizRoutes from "./routes/quiz.routes.js";
-
+import adminRoutes from "./routes/admin.routes.js";
 dotenv.config();
 
 const app = express();
@@ -31,5 +31,6 @@ app.use("/api/auth", authRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/blogs", blogRoutes);
 app.use("/api/quizzes", quizRoutes); 
+app.use("/api/admin", adminRoutes);
 
 export default app;
