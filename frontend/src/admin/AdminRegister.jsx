@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import Lottie from "lottie-react";
 import animation from "../assets/animation/Analytics.json";
 import { toast } from "sonner";
+import { ENDPOINTS } from "../utils/endpoints";
 
 const AdminRegister = () => {
   const [firstName, setFirstName] = useState("");
@@ -16,7 +17,7 @@ const AdminRegister = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:3000/api/admin/register", {
+      const res = await fetch(ENDPOINTS.ADMIN_REGISTER, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ firstName, lastName, email }),
@@ -28,7 +29,7 @@ const AdminRegister = () => {
         setFirstName("");
         setLastName("");
         setEmail("");
-        navigate("/courses"); // optional redirect
+        navigate("/admin/login"); // optional redirect
       } else {
         toast.error(data.message);
       }
