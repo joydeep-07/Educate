@@ -114,6 +114,14 @@ const AdminLogin = () => {
               onSubmit={step === 1 ? handleEmailSubmit : handleOtpSubmit}
               className="space-y-6"
             >
+              {/* Error */}
+              {error && (
+                <div className="flex items-center p-3 bg-red-50 text-red-600 rounded-lg text-sm">
+                  <FaExclamationCircle className="mr-2 flex-shrink-0" />
+                  {error}
+                </div>
+              )}
+
               {/* Email */}
               {step === 1 && (
                 <div className="space-y-1">
@@ -128,7 +136,7 @@ const AdminLogin = () => {
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-300 transition"
+                      className="w-full pl-10 pr-3 py-3 border-b border-gray-300 outline-none"
                       required
                       placeholder="Enter your email"
                     />
@@ -146,18 +154,10 @@ const AdminLogin = () => {
                     type="text"
                     value={otp}
                     onChange={(e) => setOtp(e.target.value)}
-                    className="w-full pl-3 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-300 transition"
+                    className="w-full pl-3 pr-3 py-3 border-b border-gray-300 outline-none"
                     required
                     placeholder="Enter OTP"
                   />
-                </div>
-              )}
-
-              {/* Error */}
-              {error && (
-                <div className="flex items-center p-3 bg-red-50 text-red-600 rounded-lg text-sm">
-                  <FaExclamationCircle className="mr-2 flex-shrink-0" />
-                  {error}
                 </div>
               )}
 
