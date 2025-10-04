@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { ENDPOINTS } from "../utils/endpoints";
 import Loader from "../components/Loader";
 import ErrorC from "../components/Error";
-import AuthImagePattern from "../components/AuthImagePattern";
 import Lottie from "lottie-react";
 import educationAnimation from "../assets/animation/Education.json";
 
