@@ -6,7 +6,9 @@ import { loginAdmin } from "../redux/slices/adminSlice";
 import { logout } from "../redux/slices/authSlice";
 import Lottie from "lottie-react";
 import { toast } from "sonner";
-import Heartrate from "../assets/animation/Analytics.json"; 
+import Heartrate from "../assets/animation/Analytics.json";
+import { ENDPOINTS } from "../utils/endpoints";
+import { PiSpinnerBold } from "react-icons/pi";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -14,37 +16,41 @@ const AdminLogin = () => {
   const [step, setStep] = useState(1);
   const [adminId, setAdminId] = useState(null);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleEmailSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch("http://localhost:3000/api/admin/check-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setAdminId(data.adminId);
-        setStep(2);
-        toast.success("OTP sent to your email!");
-        setError("");
-      } else {
-        setError(data.message);
-      }
-    } catch (err) {
-      setError("Server error");
-      console.error(err);
-    }
-  };
+ const handleEmailSubmit = async (e) => {
+   e.preventDefault();
+   setLoading(true); // start spinner
+   try {
+     const res = await fetch(ENDPOINTS.CHECK_EMAIL, {
+       method: "POST",
+       headers: { "Content-Type": "application/json" },
+       body: JSON.stringify({ email }),
+     });
+     const data = await res.json();
+     if (res.ok) {
+       setAdminId(data.adminId);
+       setStep(2);
+       toast.success("OTP sent to your email!");
+       setError("");
+     } else {
+       setError(data.message);
+     }
+   } catch (err) {
+     setError("Server error");
+     console.error(err);
+   } finally {
+     setLoading(false); // stop spinner
+   }
+ };
 
   const handleOtpSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:3000/api/admin/verify-otp", {
+      const res = await fetch(ENDPOINTS.VERIFY_OTP, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ adminId, otp }),
@@ -85,8 +91,9 @@ const AdminLogin = () => {
               <span className="text-blue-500">Administration</span> Portal
             </h2>
             <p className="text-blue-400 text-opacity-90 text-base leading-relaxed">
-              Manage patient records, appointments, and medical staff with our
-              HIPAA-compliant platform designed for healthcare professionals.
+              Manage courses, track student progress, and oversee learning
+              materials with our secure platform designed for educators and
+              institutions.
             </p>
           </div>
         </div>
@@ -158,8 +165,10 @@ const AdminLogin = () => {
               <div>
                 <button
                   type="submit"
-                  className="w-full flex justify-center py-3 px-4 rounded-lg font-medium text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 transition-transform transform hover:scale-[1.02] shadow-md"
+                  className="w-full flex items-center justify-center py-3 px-4 rounded-lg font-medium text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 transition-transform transform hover:scale-[1.02] shadow-md"
+                  disabled={loading} // optional: disable button while sending
                 >
+                  {loading && <PiSpinnerBold className="animate-spin mr-2" />}
                   {step === 1 ? "Next" : "Verify OTP"}
                 </button>
               </div>

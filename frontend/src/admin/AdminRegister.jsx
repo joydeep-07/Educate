@@ -58,8 +58,9 @@ const AdminRegister = () => {
               <span className="text-gray-700">Admin</span> Registration
             </h2>
             <p className="text-gray-700 text-base leading-relaxed">
-              Register a new admin account to access the medical administration
-              portal securely.
+              Manage courses, track student progress, and oversee learning
+              materials with our secure platform designed for educators and
+              institutions.
             </p>
           </div>
         </div>

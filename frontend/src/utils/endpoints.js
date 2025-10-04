@@ -7,14 +7,16 @@ export const ENDPOINTS = {
 
   // ===================== Admin =====================
   ADMIN_REGISTER: `${BASE_URL}/admin/register`,
-  GET_ADMINS: `${BASE_URL}/admin`, // if you want to get all admins
+  GET_ADMINS: `${BASE_URL}/admin`, // Get all admins
+  CHECK_EMAIL: `${BASE_URL}/admin/check-email`, // Check if email exists
+  VERIFY_OTP: `${BASE_URL}/admin/verify-otp`, // Verify OTP
 
   // ===================== Courses =====================
   ADD_COURSE: `${BASE_URL}/courses/add`,
   GET_COURSES: `${BASE_URL}/courses`,
-  UPDATE_COURSE: (id) => `${BASE_URL}/courses/${id}`, // PUT
-  DELETE_COURSE: (id) => `${BASE_URL}/courses/${id}`, // DELETE
-  GET_COURSE_BY_ID: (id) => `${BASE_URL}/courses/${id}`, // GET single
+  GET_COURSE_BY_ID: (id) => `${BASE_URL}/courses/${id}`,
+  UPDATE_COURSE: (id) => `${BASE_URL}/courses/${id}`,
+  DELETE_COURSE: (id) => `${BASE_URL}/courses/${id}`,
 
   // ===================== Blogs =====================
   ADD_BLOG: `${BASE_URL}/blogs/add`,
