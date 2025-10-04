@@ -2,10 +2,6 @@
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 
-/**
- * Converts submissions into Excel and triggers download
- * @param {Array} submissions - Array of submission objects
- */
 const downloadExcel = (submissions) => {
   if (!submissions || submissions.length === 0) {
     alert("No data available to download");
@@ -43,7 +39,7 @@ const downloadExcel = (submissions) => {
   const fileData = new Blob([excelBuffer], {
     type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
   });
-  saveAs(fileData, `answer_scripts_${Date.now()}.xlsx`);
+  saveAs(fileData, `Students_Exam_Record.xlsx`);
 };
 
 export default downloadExcel;
