@@ -110,13 +110,31 @@ const Footer = () => {
                 </a>
               </div>
             </div>
+            {/* ========================================= TEST BUTTONS =========================================  */}
+            <div className="flex flex-col gap-4 mt-6 w-full max-w-xs">
+              <Link
+                to="/admin/login"
+                className="flex items-center justify-center gap-2 px-5 py-3 
+               bg-gradient-to-r from-emerald-500 to-green-600 
+               text-white font-semibold rounded-xl 
+               shadow-md hover:shadow-xl hover:scale-[1.02] 
+               transition-transform duration-300"
+              >
+                Admin Panel
+              </Link>
 
-            <Link
-              to="/admin/panel"
-              className="inline-block mt-5 px-4 py-1 bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold rounded-full shadow-lg "
-            >
-              Admin Panel
-            </Link>
+              <Link
+                to="/admin/register"
+                className="flex items-center justify-center gap-2 px-5 py-3 
+               bg-gradient-to-r from-red-500 to-red-600 
+               text-white font-semibold rounded-xl 
+               shadow-md hover:shadow-xl hover:scale-[1.02] 
+               transition-transform duration-300"
+              >
+                Admin Register
+              </Link>
+            </div>
+            {/* ========================================= TEST BUTTONS ENDS HERE =========================================  */}
           </div>
         </div>
 
