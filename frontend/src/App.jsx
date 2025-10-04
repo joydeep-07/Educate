@@ -221,7 +221,10 @@ const AnimatedRoutes = () => {
             </AnimatedRoute>
           }
         />
-
+        {/* ========== CONFEDENTIAL ROUTE BELOW ==========  */}
+        {/* ========== CONFEDENTIAL ROUTE BELOW ==========  */}
+        {/* ========== COMMENT AFTER USING ===============  */}
+        
         <Route
           path="/admin/register"
           element={
@@ -230,6 +233,10 @@ const AnimatedRoutes = () => {
             </AnimatedRoute>
           }
         />
+
+        {/* ========== CONFEDENTIAL ROUTE ABOVE ==========  */}
+        {/* ========== CONFEDENTIAL ROUTE ABOVE ==========  */}
+        {/* ========== CONFEDENTIAL ROUTE ABOVE ==========  */}
 
         <Route
           path="/forgot/password"
