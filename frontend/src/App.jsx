@@ -27,6 +27,7 @@ import BlogDetails from "./pages/BlogDetails";
 import QuizQues from "./pages/QuizQues";
 import AnswerScripts from "./pages/AnswerScripts";
 import AnsPage from "./pages/AnsPage";
+import AdminRegister from "./admin/AdminRegister";
 // Animated wrapper using GSAP
 const AnimatedRoute = ({ children }) => {
   const ref = useRef(null);
@@ -217,6 +218,15 @@ const AnimatedRoutes = () => {
           element={
             <AnimatedRoute>
               <Signup />
+            </AnimatedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/register"
+          element={
+            <AnimatedRoute>
+              <AdminRegister />
             </AnimatedRoute>
           }
         />
