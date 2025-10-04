@@ -7,9 +7,9 @@ export const ENDPOINTS = {
 
   // ===================== Admin =====================
   ADMIN_REGISTER: `${BASE_URL}/admin/register`,
-  GET_ADMINS: `${BASE_URL}/admin`, // Get all admins
-  CHECK_EMAIL: `${BASE_URL}/admin/check-email`, // Check if email exists
-  VERIFY_OTP: `${BASE_URL}/admin/verify-otp`, // Verify OTP
+  GET_ADMINS: `${BASE_URL}/admin`, 
+  CHECK_EMAIL: `${BASE_URL}/admin/check-email`, 
+  VERIFY_OTP: `${BASE_URL}/admin/verify-otp`, 
 
   // ===================== Courses =====================
   ADD_COURSE: `${BASE_URL}/courses/add`,
