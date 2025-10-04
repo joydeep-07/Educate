@@ -4,6 +4,8 @@ import { ENDPOINTS } from "../utils/endpoints";
 import Loader from "../components/Loader";
 import ErrorC from "../components/Error";
 import AuthImagePattern from "../components/AuthImagePattern";
+import Lottie from "lottie-react";
+import educationAnimation from "../assets/animation/Education.json";
 
 export const CourseDetails = () => {
   const { id } = useParams();
@@ -100,7 +102,11 @@ export const CourseDetails = () => {
                 </div>
               </div>
 
-              <div className="lg:w-96 bg-blue-200 h-[250px] rounded-md w-full"></div>
+              <div className="lg:w-96 h-[250px] rounded-md w-full">
+                <div className="w-64 h-64">
+                  <Lottie animationData={educationAnimation} loop autoplay />
+                </div>
+              </div>
             </div>
           </div>
         </div>
