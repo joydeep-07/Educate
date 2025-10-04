@@ -6,12 +6,12 @@ import { loginAdmin } from "../redux/slices/adminSlice";
 import { logout } from "../redux/slices/authSlice";
 import Lottie from "lottie-react";
 import { toast } from "sonner";
-import Heartrate from "../assets/animation/Analytics.json"; // your existing animation
+import Heartrate from "../assets/animation/Analytics.json"; 
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
-  const [step, setStep] = useState(1); // 1 = email, 2 = otp
+  const [step, setStep] = useState(1);
   const [adminId, setAdminId] = useState(null);
   const [error, setError] = useState("");
 
@@ -30,7 +30,7 @@ const AdminLogin = () => {
       if (res.ok) {
         setAdminId(data.adminId);
         setStep(2);
-        toast.success("Admin found! Enter OTP (demo: 123456)");
+        toast.success("OTP sent to your email!");
         setError("");
       } else {
         setError(data.message);
@@ -141,7 +141,7 @@ const AdminLogin = () => {
                     onChange={(e) => setOtp(e.target.value)}
                     className="w-full pl-3 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-300 transition"
                     required
-                    placeholder="Enter OTP (demo: 123456)"
+                    placeholder="Enter OTP"
                   />
                 </div>
               )}
