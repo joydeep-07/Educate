@@ -1,43 +1,67 @@
 import React, { useState } from "react";
-import {
-  FaEye,
-  FaEyeSlash,
-  FaExclamationCircle,
-  FaLock,
-  FaEnvelope,
-} from "react-icons/fa";
+import { FaEnvelope, FaExclamationCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginAdmin } from "../redux/slices/adminSlice";
-import { logout } from "../redux/slices/authSlice"; 
+import { logout } from "../redux/slices/authSlice";
 import Lottie from "lottie-react";
-import Heartrate from "../assets/animation/Analytics.json";
+import { toast } from "sonner";
+import Heartrate from "../assets/animation/Analytics.json"; // your existing animation
 
 const AdminLogin = () => {
-  const [password, setPassword] = useState("paul");
-  const [email, setEmail] = useState("admin@gmail.com");
+  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
+  const [step, setStep] = useState(1); // 1 = email, 2 = otp
+  const [adminId, setAdminId] = useState(null);
   const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
+  const handleEmailSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const res = await fetch("http://localhost:3000/api/admin/check-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setAdminId(data.adminId);
+        setStep(2);
+        toast.success("Admin found! Enter OTP (demo: 123456)");
+        setError("");
+      } else {
+        setError(data.message);
+      }
+    } catch (err) {
+      setError("Server error");
+      console.error(err);
+    }
+  };
 
-    if (password === "paul" && email === "admin@gmail.com") {
-      const adminData = { email, role: "admin" };
-
-      //  If a user is logged in, force logout
-      dispatch(logout());
-
-      //  Login as admin
-      dispatch(loginAdmin(adminData));
-
-      navigate("/courses");
-      setError("");
-    } else {
-      setError("Incorrect credentials. Please try again.");
-      setPassword("");
+  const handleOtpSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch("http://localhost:3000/api/admin/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ adminId, otp }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        dispatch(logout());
+        dispatch(loginAdmin({ email: data.admin.email, role: "admin" }));
+        // toast.success("Logged in successfully!");
+        navigate("/courses");
+        setError("");
+      } else {
+        setError(data.message);
+      }
+    } catch (err) {
+      setError("Server error");
+      console.error(err);
     }
   };
 
@@ -46,7 +70,6 @@ const AdminLogin = () => {
       <div className="w-full max-w-6xl flex bg-white rounded-2xl shadow-2xl overflow-hidden h-[600px]">
         {/* Left Side - Banner */}
         <div className="w-2/3 bg-white relative flex flex-col justify-between py-12 px-12 overflow-hidden">
-          {/* Animation */}
           <div className="flex flex-1 items-center justify-center">
             <Lottie
               animationData={Heartrate}
@@ -55,8 +78,6 @@ const AdminLogin = () => {
               className="w-80 h-80"
             />
           </div>
-
-          {/* Bottom Text */}
           <div className="z-10 px-2 pb-4">
             <h2 className="text-3xl font-semibold text-white mb-4 leading-tight">
               <span className="text-blue-600">Secure</span> Medical
@@ -77,56 +98,53 @@ const AdminLogin = () => {
               Admin Login
             </h2>
             <p className="text-gray-500 text-sm mb-8">
-              Enter your credentials to access the dashboard
+              {step === 1
+                ? "Enter your email to start login"
+                : "Enter the OTP sent to your email"}
             </p>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form
+              onSubmit={step === 1 ? handleEmailSubmit : handleOtpSubmit}
+              className="space-y-6"
+            >
               {/* Email */}
-              <div className="space-y-1">
-                <label className="block text-sm font-medium text-gray-700">
-                  Email
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <FaEnvelope className="text-gray-400" />
+              {step === 1 && (
+                <div className="space-y-1">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Email
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <FaEnvelope className="text-gray-400" />
+                    </div>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-300 transition"
+                      required
+                      placeholder="Enter your email"
+                    />
                   </div>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-300 transition"
-                    required
-                    placeholder="Enter your email"
-                  />
                 </div>
-              </div>
+              )}
 
-              {/* Password */}
-              <div className="space-y-1">
-                <label className="block text-sm font-medium text-gray-700">
-                  Password
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <FaLock className="text-gray-400" />
-                  </div>
+              {/* OTP */}
+              {step === 2 && (
+                <div className="space-y-1">
+                  <label className="block text-sm font-medium text-gray-700">
+                    OTP
+                  </label>
                   <input
-                    type={showPassword ? "text" : "password"}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter your password"
-                    className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-300 transition"
+                    type="text"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value)}
+                    className="w-full pl-3 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-300 transition"
                     required
+                    placeholder="Enter OTP (demo: 123456)"
                   />
-                  <button
-                    type="button"
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? <FaEyeSlash /> : <FaEye />}
-                  </button>
                 </div>
-              </div>
+              )}
 
               {/* Error */}
               {error && (
@@ -140,9 +158,9 @@ const AdminLogin = () => {
               <div>
                 <button
                   type="submit"
-                  className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition"
+                  className="w-full flex justify-center py-3 px-4 rounded-lg font-medium text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 transition-transform transform hover:scale-[1.02] shadow-md"
                 >
-                  Sign in
+                  {step === 1 ? "Next" : "Verify OTP"}
                 </button>
               </div>
             </form>
