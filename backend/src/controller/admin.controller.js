@@ -99,9 +99,15 @@ export const verifyAdminOtp = async (req, res) => {
     admin.otpExpiry = null;
     await admin.save();
 
+    // Return full admin info
     res.status(200).json({
       message: "OTP verified",
-      admin: { id: admin._id, email: admin.email },
+      admin: {
+        id: admin._id,
+        firstName: admin.firstName,
+        lastName: admin.lastName,
+        email: admin.email,
+      },
     });
   } catch (err) {
     console.error(err);

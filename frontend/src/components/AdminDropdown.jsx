@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { CiCirclePlus, CiMail, CiPower } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logoutAdmin } from "../redux/slices/adminSlice";
 import { FaUserCircle } from "react-icons/fa";
 
@@ -13,10 +13,8 @@ const AdminDropdown = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const adminInfo = {
-    name: "Admin Panel",
-    email: "admin@gmail.com",
-  };
+  // Get admin from Redux state
+  const admin = useSelector((state) => state.admin.admin);
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -44,9 +42,19 @@ const AdminDropdown = () => {
     { name: "Add Course", icon: <CiCirclePlus />, path: "/admin/addcourse" },
     { name: "New Blog", icon: <CiCirclePlus />, path: "/admin/createblog" },
     { name: "New Quiz", icon: <CiCirclePlus />, path: "/admin/createquiz" },
-    { name: "Answer Scripts", icon: <CiCirclePlus />, path: "/admin/answerscripts" },
+    {
+      name: "Answer Scripts",
+      icon: <CiCirclePlus />,
+      path: "/admin/answerscripts",
+    },
     { name: "Send Newsletter", icon: <CiMail />, path: "/admin/newsletter" },
   ];
+
+  // Build full name safely
+  const fullName = admin
+    ? `${admin.firstName || ""} ${admin.lastName || ""}`.trim()
+    : "Admin Panel";
+  const email = admin?.email || "admin@gmail.com";
 
   return (
     <div className="relative" ref={dropdownRef}>
@@ -61,7 +69,7 @@ const AdminDropdown = () => {
           <FaUserCircle />
         </div>
         <span className="text-sm font-medium text-gray-700 hidden sm:block">
-          {adminInfo.name}
+          {fullName}
         </span>
         <IoIosArrowDown
           className={`text-gray-500 transition-transform duration-200 ${
@@ -86,11 +94,9 @@ const AdminDropdown = () => {
             </div>
             <div className="overflow-hidden">
               <h2 className="font-semibold text-gray-900 text-sm truncate">
-                {adminInfo.name}
+                {fullName}
               </h2>
-              <p className="text-xs text-gray-500 truncate">
-                {adminInfo.email}
-              </p>
+              <p className="text-xs text-gray-500 truncate">{email}</p>
             </div>
           </div>
         </div>

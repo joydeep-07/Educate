@@ -57,26 +57,45 @@ const AdminLogin = () => {
 
   const handleOtpSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // optional: show loading state
     try {
       const res = await fetch(ENDPOINTS.VERIFY_OTP, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ adminId, otp }),
       });
+
       const data = await res.json();
+
       if (res.ok) {
+        // Clear any regular user session
         dispatch(logout());
-        dispatch(loginAdmin({ email: data.admin.email, role: "admin" }));
+
+        // Save full admin info in Redux + localStorage
+        dispatch(
+          loginAdmin({
+            id: data.admin.id,
+            firstName: data.admin.firstName,
+            lastName: data.admin.lastName,
+            email: data.admin.email,
+            role: "admin",
+          })
+        );
+
+        // toast.success("Admin logged in successfully");
         navigate("/courses");
         setError("");
       } else {
         setError(data.message);
       }
     } catch (err) {
-      setError("Server error");
       console.error(err);
+      setError("Server error");
+    } finally {
+      setLoading(false);
     }
   };
+
 
   return (
     <div className="flex items-center justify-center py-10 mt-10 font-sans">
