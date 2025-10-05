@@ -1,6 +1,6 @@
 import Blog from "../models/blog.model.js";
 
-// ✅ Create a new blog
+//  Create a new blog
 export const createBlog = async (req, res) => {
   try {
     const blog = new Blog(req.body);
@@ -11,7 +11,7 @@ export const createBlog = async (req, res) => {
   }
 };
 
-// ✅ Get all blogs
+//  Get all blogs
 export const getBlogs = async (req, res) => {
   try {
     const blogs = await Blog.find().sort({ createdAt: -1 });
@@ -21,7 +21,7 @@ export const getBlogs = async (req, res) => {
   }
 };
 
-// ✅ Get a single blog by ID
+//  Get a single blog by ID
 export const getBlogById = async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id);
@@ -36,7 +36,7 @@ export const getBlogById = async (req, res) => {
   }
 };
 
-// ✅ Update blog
+//  Update blog
 export const updateBlog = async (req, res) => {
   try {
     const blog = await Blog.findByIdAndUpdate(req.params.id, req.body, {
@@ -55,7 +55,7 @@ export const updateBlog = async (req, res) => {
   }
 };
 
-// ✅ Delete blog
+//  Delete blog
 export const deleteBlog = async (req, res) => {
   try {
     const blog = await Blog.findByIdAndDelete(req.params.id);
