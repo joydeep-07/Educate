@@ -27,7 +27,7 @@ export const addCourse = async (req, res) => {
       price,
       duration,
       category,
-      courseLink, // ✅ Added here
+      courseLink, 
     });
 
     await newCourse.save();
@@ -86,7 +86,7 @@ export const updateCourse = async (req, res) => {
       price,
       duration,
       category,
-      courseLink, // ✅ Added here
+      courseLink, 
     } = req.body;
 
     if (bio && bio.trim().split(/\s+/).length > 20) {
@@ -104,7 +104,7 @@ export const updateCourse = async (req, res) => {
         duration,
         category,
         courseLink,
-      }, // ✅ included field
+      }, 
       { new: true, runValidators: true }
     );
 
