@@ -310,7 +310,7 @@ const submitQuiz = async (req, res) => {
       });
     }
 
-    // ✅ Always compute totalMarks from quiz definition
+    // Always compute totalMarks from quiz definition
     const totalMarks = quiz.questions.reduce((s, q) => s + (q.marks || 1), 0);
 
     // Save submission
