@@ -27,7 +27,7 @@ const Root = () => {
 
         <main className="flex-grow flex">
           {/* Page Content */}
-          <div className="flex-1 p-6">
+          <div className="flex-1 pb-6">
             <Outlet />
           </div>
         </main>
