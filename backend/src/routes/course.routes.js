@@ -2,7 +2,7 @@ import express from "express";
 import {
   addCourse,
   getCourses,
-  getCourseById, // create this in your controller
+  getCourseById,
   updateCourse,
   deleteCourse,
 } from "../controller/course.controller.js";

@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import AuthImagePattern from "../components/AuthImagePattern";
 import { ENDPOINTS } from "../utils/endpoints";
 import { toast } from "sonner";
+
 const AddCourse = () => {
   const {
     register,
@@ -19,6 +20,7 @@ const AddCourse = () => {
       price: "",
       duration: "",
       category: "",
+      courseLink: "", // ✅ Added here
     },
   });
 
@@ -142,7 +144,7 @@ const AddCourse = () => {
                   className={`block w-full px-2 py-1 border-b ${
                     errors.price ? "border-red-500" : "border-gray-300"
                   } focus:outline-none focus:border-blue-500 text-sm rounded-md`}
-                  placeholder="Enter Price or Leave black if Free"
+                  placeholder="Enter Price or Leave blank if Free"
                   {...register("price", {
                     min: { value: 0, message: "Price cannot be negative" },
                   })}
@@ -228,6 +230,37 @@ const AddCourse = () => {
                 {errors.category && (
                   <p className="mt-1 text-xs text-red-600">
                     {errors.category.message}
+                  </p>
+                )}
+              </div>
+
+              {/* ✅ Course Link */}
+              <div>
+                <label
+                  htmlFor="courseLink"
+                  className="flex items-center text-gray-700 text-sm font-medium mb-1 gap-2"
+                >
+                  Course Link
+                </label>
+                <input
+                  id="courseLink"
+                  type="url"
+                  placeholder="https://example.com/course-link"
+                  className={`block w-full px-2 py-1 border-b ${
+                    errors.courseLink ? "border-red-500" : "border-gray-300"
+                  } focus:outline-none focus:border-blue-500 text-sm rounded-md`}
+                  {...register("courseLink", {
+                    required: "Course link is required",
+                    pattern: {
+                      value:
+                        /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)([\/\w .-]*)*\/?$/,
+                      message: "Enter a valid URL",
+                    },
+                  })}
+                />
+                {errors.courseLink && (
+                  <p className="mt-1 text-xs text-red-600">
+                    {errors.courseLink.message}
                   </p>
                 )}
               </div>

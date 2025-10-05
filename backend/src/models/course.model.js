@@ -9,6 +9,7 @@ const courseSchema = new mongoose.Schema(
     syllabus: { type: String, required: true, trim: true },
     duration: { type: String, required: true, trim: true },
     category: { type: String, required: true, trim: true },
+    courseLink: { type: String, required: true, trim: true }, // ✅ Added new field
   },
   { timestamps: true }
 );

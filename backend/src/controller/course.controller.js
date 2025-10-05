@@ -4,22 +4,31 @@ import mongoose from "mongoose";
 // Add a new course
 export const addCourse = async (req, res) => {
   try {
-const { courseName, facultyName, bio, syllabus, price, duration, category } =
-  req.body;
+    const {
+      courseName,
+      facultyName,
+      bio,
+      syllabus,
+      price,
+      duration,
+      category,
+      courseLink,
+    } = req.body;
 
     if (bio.trim().split(/\s+/).length > 20) {
       return res.status(400).json({ message: "Bio cannot exceed 20 words" });
     }
 
-   const newCourse = new Course({
-     courseName,
-     facultyName,
-     bio,
-     syllabus,
-     price,
-     duration,
-     category,
-   });
+    const newCourse = new Course({
+      courseName,
+      facultyName,
+      bio,
+      syllabus,
+      price,
+      duration,
+      category,
+      courseLink, // ✅ Added here
+    });
 
     await newCourse.save();
 
@@ -77,6 +86,7 @@ export const updateCourse = async (req, res) => {
       price,
       duration,
       category,
+      courseLink, // ✅ Added here
     } = req.body;
 
     if (bio && bio.trim().split(/\s+/).length > 20) {
@@ -85,7 +95,16 @@ export const updateCourse = async (req, res) => {
 
     const updatedCourse = await Course.findByIdAndUpdate(
       id,
-      { courseName, facultyName, bio, syllabus, price, duration, category }, // ✅ include them here
+      {
+        courseName,
+        facultyName,
+        bio,
+        syllabus,
+        price,
+        duration,
+        category,
+        courseLink,
+      }, // ✅ included field
       { new: true, runValidators: true }
     );
 
@@ -100,7 +119,6 @@ export const updateCourse = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-
 
 // Delete course
 export const deleteCourse = async (req, res) => {
