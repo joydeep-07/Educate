@@ -4,12 +4,12 @@ const courseSchema = new mongoose.Schema(
   {
     courseName: { type: String, required: true, trim: true },
     facultyName: { type: String, required: true, trim: true },
-    bio: { type: String, required: true, maxlength: 200, trim: true }, // ~20 words
+    bio: { type: String, required: true, maxlength: 200, trim: true }, 
     price: { type: Number },
     syllabus: { type: String, required: true, trim: true },
     duration: { type: String, required: true, trim: true },
     category: { type: String, required: true, trim: true },
-    courseLink: { type: String, required: true, trim: true }, // ✅ Added new field
+    courseLink: { type: String, required: true, trim: true }, 
   },
   { timestamps: true }
 );
