@@ -152,7 +152,7 @@ const AllCourses = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {courses.map((course) => (
             <div
-              onClick={() => navigate(`/details/${course._id}`)}
+              // onClick={() => navigate(`/details/${course._id}`)}
               key={course._id}
               className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group border border-gray-100 flex flex-col"
             >
