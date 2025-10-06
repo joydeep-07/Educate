@@ -1,7 +1,7 @@
-// src/redux/authSlice.js
+// src/redux/slices/authSlice.js
 import { createSlice } from "@reduxjs/toolkit";
-import { toast } from "sonner"; 
-// helper function
+
+// Helper to safely parse localStorage
 const safeJSONParse = (item) => {
   try {
     return item ? JSON.parse(item) : null;
@@ -10,8 +10,9 @@ const safeJSONParse = (item) => {
   }
 };
 
+// Initialize state from localStorage
 const initialState = {
-  user: safeJSONParse(localStorage.getItem("user")),
+  user: safeJSONParse(localStorage.getItem("user")) || null,
   token: localStorage.getItem("token") || null,
 };
 
@@ -23,6 +24,7 @@ const authSlice = createSlice({
       state.user = action.payload.user;
       state.token = action.payload.token;
 
+      // Save to localStorage
       localStorage.setItem("user", JSON.stringify(action.payload.user));
       localStorage.setItem("token", action.payload.token);
     },
@@ -30,12 +32,17 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
 
+      // Clear localStorage
       localStorage.removeItem("user");
       localStorage.removeItem("token");
-      // toast.success("Logout Successfull")
+    },
+    // Optional: refresh user from localStorage (useful on page reload)
+    loadUserFromStorage: (state) => {
+      state.user = safeJSONParse(localStorage.getItem("user")) || null;
+      state.token = localStorage.getItem("token") || null;
     },
   },
 });
 
-export const { loginSuccess, logout } = authSlice.actions;
+export const { loginSuccess, logout, loadUserFromStorage } = authSlice.actions;
 export default authSlice.reducer;

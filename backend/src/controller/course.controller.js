@@ -27,11 +27,10 @@ export const addCourse = async (req, res) => {
       price,
       duration,
       category,
-      courseLink, 
+      courseLink,
     });
 
     await newCourse.save();
-
     res
       .status(201)
       .json({ message: "Course added successfully", course: newCourse });
@@ -62,10 +61,7 @@ export const getCourseById = async (req, res) => {
     }
 
     const course = await Course.findById(id);
-
-    if (!course) {
-      return res.status(404).json({ message: "Course not found" });
-    }
+    if (!course) return res.status(404).json({ message: "Course not found" });
 
     res.status(200).json(course);
   } catch (err) {
@@ -86,7 +82,7 @@ export const updateCourse = async (req, res) => {
       price,
       duration,
       category,
-      courseLink, 
+      courseLink,
     } = req.body;
 
     if (bio && bio.trim().split(/\s+/).length > 20) {
@@ -104,7 +100,7 @@ export const updateCourse = async (req, res) => {
         duration,
         category,
         courseLink,
-      }, 
+      },
       { new: true, runValidators: true }
     );
 
@@ -126,10 +122,8 @@ export const deleteCourse = async (req, res) => {
     const { id } = req.params;
 
     const deletedCourse = await Course.findByIdAndDelete(id);
-
-    if (!deletedCourse) {
+    if (!deletedCourse)
       return res.status(404).json({ message: "Course not found" });
-    }
 
     res.status(200).json({ message: "Course deleted successfully" });
   } catch (err) {

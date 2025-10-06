@@ -7,9 +7,9 @@ export const ENDPOINTS = {
 
   // ===================== Admin =====================
   ADMIN_REGISTER: `${BASE_URL}/admin/register`,
-  GET_ADMINS: `${BASE_URL}/admin`, 
-  CHECK_EMAIL: `${BASE_URL}/admin/check-email`, 
-  VERIFY_OTP: `${BASE_URL}/admin/verify-otp`, 
+  GET_ADMINS: `${BASE_URL}/admin`,
+  CHECK_EMAIL: `${BASE_URL}/admin/check-email`,
+  VERIFY_OTP: `${BASE_URL}/admin/verify-otp`,
 
   // ===================== Courses =====================
   ADD_COURSE: `${BASE_URL}/courses/add`,
@@ -41,4 +41,12 @@ export const ENDPOINTS = {
   GET_SUBMISSIONS: `${BASE_URL}/quizzes/submissions`,
   GET_SUBMISSION_BY_ID: (submissionId) =>
     `${BASE_URL}/quizzes/submissions/${submissionId}`,
+
+  // ===================== Enrollment =====================
+  ENROLL_STUDENT: `${BASE_URL}/enrollments/enroll`, // POST
+  GET_ENROLLMENTS_BY_STUDENT: (studentId) =>
+    `${BASE_URL}/enrollments/student/${studentId}`, // GET
+  GET_ENROLLMENTS_BY_COURSE: (courseId) =>
+    `${BASE_URL}/enrollments/course/${courseId}`, // GET
+  UNENROLL_STUDENT: `${BASE_URL}/enrollments/unenroll`, // DELETE
 };

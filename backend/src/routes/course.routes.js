@@ -9,7 +9,6 @@ import {
 
 const router = express.Router();
 
-
 router.post("/add", addCourse);
 router.get("/", getCourses);
 router.get("/:id", getCourseById);

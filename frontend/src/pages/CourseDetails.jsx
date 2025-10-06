@@ -1,22 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { ENDPOINTS } from "../utils/endpoints";
 import Loader from "../components/Loader";
 import ErrorC from "../components/Error";
 import Lottie from "lottie-react";
+import { toast } from "sonner";
 import educationAnimation from "../assets/animation/Education.json";
 
 export const CourseDetails = () => {
-  const { id } = useParams();
+  const { id } = useParams(); // courseId
+  const navigate = useNavigate();
+  const { user: reduxUser, token } = useSelector((state) => state.auth);
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState("syllabus");
 
+  // Fetch course details
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const res = await fetch(`${ENDPOINTS.GET_COURSES}/${id}`);
+        const res = await fetch(`${ENDPOINTS.GET_COURSE_BY_ID(id)}`);
         if (!res.ok) throw new Error("Failed to fetch course details");
         const data = await res.json();
         setCourse(data);
@@ -27,19 +32,57 @@ export const CourseDetails = () => {
         setLoading(false);
       }
     };
-
     fetchCourse();
   }, [id]);
+
+  // Get student from Redux or fallback to localStorage
+  const getStudentId = () => {
+    if (reduxUser?._id) return reduxUser._id;
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        return JSON.parse(storedUser)._id;
+      } catch {
+        return null;
+      }
+    }
+    return null;
+  };
+
+  const handleEnroll = async () => {
+    if (!token) {
+      toast.error("Please log in first");
+      return;
+    }
+
+    try {
+      const res = await fetch(ENDPOINTS.ENROLL_STUDENT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ courseId: id }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.message || "Enrollment failed");
+
+      toast.success(data.message);
+      navigate("/enroll");
+    } catch (err) {
+      toast.error(err.message);
+    }
+  };
+
 
   if (loading) return <Loader />;
   if (error) return <ErrorC />;
 
-  const formatSyllabus = (syllabus) => {
-    if (!syllabus) return [];
-    return syllabus.split("\n").filter((item) => item.trim());
-  };
-
-  const syllabusItems = formatSyllabus(course.syllabus);
+  const syllabusItems = course.syllabus
+    ? course.syllabus.split("\n").filter((item) => item.trim())
+    : [];
 
   return (
     <div className="min-h-screen pt-15">
@@ -95,7 +138,10 @@ export const CourseDetails = () => {
                 </p>
 
                 <div className="flex flex-wrap gap-3">
-                  <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg">
+                  <button
+                    onClick={handleEnroll}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold"
+                  >
                     Enroll Now
                   </button>
                 </div>
@@ -112,25 +158,22 @@ export const CourseDetails = () => {
 
         {/* Tab Navigation */}
         <div>
-          <div>
-            <nav className="flex space-x-8 px-8">
-              {["syllabus", "reviews"].map((tab) => (
-                <button
-                  key={tab}
-                  className={`py-2 px-1 border-b-2 font-medium text-sm capitalize transition-all duration-200 ${
-                    activeTab === tab
-                      ? "border-blue-500 text-blue-600"
-                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                  }`}
-                  onClick={() => setActiveTab(tab)}
-                >
-                  {tab}
-                </button>
-              ))}
-            </nav>
-          </div>
+          <nav className="flex space-x-8 px-8">
+            {["syllabus", "reviews"].map((tab) => (
+              <button
+                key={tab}
+                className={`py-2 px-1 border-b-2 font-medium text-sm capitalize transition-all duration-200 ${
+                  activeTab === tab
+                    ? "border-blue-500 text-blue-600"
+                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                }`}
+                onClick={() => setActiveTab(tab)}
+              >
+                {tab}
+              </button>
+            ))}
+          </nav>
 
-          {/* Tab Content */}
           <div className="p-8">
             {activeTab === "syllabus" && (
               <div>
