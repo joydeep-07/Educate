@@ -47,7 +47,7 @@ export const checkAdminEmail = async (req, res) => {
 
     // Generate 6-digit OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    const otpExpiry = Date.now() + 5 * 60 * 1000; // valid for 5 mins
+    const otpExpiry = Date.now() + 5 * 60 * 1000; 
 
     admin.otp = otp;
     admin.otpExpiry = otpExpiry;
