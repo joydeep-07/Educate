@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// Import useNavigate for navigation
 import { useNavigate } from "react-router-dom";
 import { ENDPOINTS } from "../utils/endpoints";
 import { toast } from "sonner";
