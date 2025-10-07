@@ -102,7 +102,7 @@ const AllCourses = () => {
           </div>
 
           <div className="md:w-1/2 flex justify-center items-center">
-            {/* Banner here --- Comming Soon */}
+           
             <div className="flex h-100 w-100 flex-1 items-center justify-center">
               <Lottie animationData={brain} loop autoplay className="" />
             </div>
