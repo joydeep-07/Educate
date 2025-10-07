@@ -7,7 +7,7 @@ const About = () => {
         <div className="banner h-70 w-[100vw] bg-sky-800/20 flex justify-center items-center">
           <div className='w-80 '>
             <div className="text-5xl font-bold text-white uppercase text-left">
-              <h1>Hey </h1>
+              <h1>Think </h1>
               <h1>Wassup</h1>
             </div>
           </div>
