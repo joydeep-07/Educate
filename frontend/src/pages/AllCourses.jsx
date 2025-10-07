@@ -13,8 +13,6 @@ const AllCourses = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  // Initialize navigation hook
   const navigate = useNavigate();
   const { admin } = useSelector((state) => state.admin);
 
