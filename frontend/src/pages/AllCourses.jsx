@@ -67,7 +67,6 @@ const AllCourses = () => {
 
      toast.success("Course deleted successfully");
 
-     // Remove the deleted course from state instantly (no need to refetch all)
      setCourses((prev) => prev.filter((course) => course._id !== id));
    } catch (err) {
      console.error(err);
