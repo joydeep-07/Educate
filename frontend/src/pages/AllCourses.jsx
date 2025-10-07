@@ -16,8 +16,6 @@ const AllCourses = () => {
 
   // Initialize navigation hook
   const navigate = useNavigate();
-
-  // Ge Admin from redux
   const { admin } = useSelector((state) => state.admin);
 
   useEffect(() => {
