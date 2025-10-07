@@ -8,7 +8,7 @@ const About = () => {
           <div className='w-80 '>
             <div className="text-5xl font-bold text-white uppercase text-left">
               <h1>Think </h1>
-              <h1>Differently</h1>
+              <h1>Different</h1>
             </div>
           </div>
         </div>
