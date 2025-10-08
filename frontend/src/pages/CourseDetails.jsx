@@ -50,30 +50,7 @@ export const CourseDetails = () => {
   };
 
   const handleEnroll = async () => {
-    if (!token) {
-      toast.error("Please log in first");
-      return;
-    }
-
-    try {
-      const res = await fetch(ENDPOINTS.ENROLL_STUDENT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ courseId: id }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.message || "Enrollment failed");
-
-      toast.success(data.message);
-      navigate("/enroll");
-    } catch (err) {
-      toast.error(err.message);
-    }
+   toast.info("Processing your enrollment...");
   };
 
 
