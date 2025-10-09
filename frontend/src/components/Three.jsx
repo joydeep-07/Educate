@@ -17,7 +17,7 @@ const Three = () => {
     const container = containerRef.current;
     if (!container) return;
 
-    // Scene setup
+    // Scene setup (only once)
     const scene = new THREE.Scene();
     sceneRef.current = scene;
 
