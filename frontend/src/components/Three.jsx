@@ -70,7 +70,7 @@ const Three = () => {
     geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
     geometryRef.current = geometry;
 
-    // Store references for later use
+    // Store references for later use in animation
     originalPositionsRef.current = originalPositions;
 
     const material = new THREE.PointsMaterial({
