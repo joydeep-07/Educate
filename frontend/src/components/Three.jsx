@@ -60,7 +60,7 @@ const Three = () => {
       positions[idx + 1] = y * SPHERE_RADIUS;
       positions[idx + 2] = z * SPHERE_RADIUS;
 
-      // Store original positions
+      // Store original positions for reference
       originalPositions[idx] = positions[idx];
       originalPositions[idx + 1] = positions[idx + 1];
       originalPositions[idx + 2] = positions[idx + 2];
