@@ -41,7 +41,7 @@ const Three = () => {
     const REPULSION_RADIUS = 15;
     const REPULSION_STRENGTH = 8;
 
-    // Geometry
+    // Geometry and Material
     const positions = new Float32Array(PARTICLE_COUNT * 3);
     const originalPositions = new Float32Array(PARTICLE_COUNT * 3);
 
