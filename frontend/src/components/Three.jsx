@@ -86,7 +86,7 @@ const Three = () => {
     scene.add(points);
     pointsRef.current = points;
 
-    // Mouse move handler
+    // Mouse move handler - update mouse position
     const handleMouseMove = (event) => {
       const rect = container.getBoundingClientRect();
       const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
