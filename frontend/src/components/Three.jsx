@@ -35,7 +35,7 @@ const Three = () => {
     container.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
-    // Parameters
+    // Parameters for particles and interaction
     const PARTICLE_COUNT = 2600;
     const SPHERE_RADIUS = 22;
     const REPULSION_RADIUS = 15;
