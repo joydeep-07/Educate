@@ -45,7 +45,7 @@ const Three = () => {
     const positions = new Float32Array(PARTICLE_COUNT * 3);
     const originalPositions = new Float32Array(PARTICLE_COUNT * 3);
 
-    // Fibonacci sphere distribution
+    // Fibonacci sphere distribution for even spacing
     for (let i = 0; i < PARTICLE_COUNT; i++) {
       const idx = i * 3;
       const phi = Math.acos(1 - (2 * (i + 0.5)) / PARTICLE_COUNT);
