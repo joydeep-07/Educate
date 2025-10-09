@@ -55,7 +55,7 @@ const Three = () => {
       const y = Math.sin(phi) * Math.sin(theta);
       const z = Math.cos(phi);
 
-      // Original positions (sphere)
+      // Original positions (sphere) and current positions
       positions[idx] = x * SPHERE_RADIUS;
       positions[idx + 1] = y * SPHERE_RADIUS;
       positions[idx + 2] = z * SPHERE_RADIUS;
